@@ -10,7 +10,7 @@ public class Main {
         ProductPurchaseInfo productPurchaseInfo1 = new ProductPurchaseInfo(
                 100,
                 121.75,
-                0.75
+                101.1
         );
         printPurchaseSums(productPurchaseInfo1);
 
@@ -30,19 +30,8 @@ public class Main {
     }
 
     public static void printPurchaseSums(ProductPurchaseInfo productPurchaseInfo) {
-        if (productPurchaseInfo.getProductCoast() > 0.0 && productPurchaseInfo.getProductCount() > 0.0) {
-            System.out.println("Сумма без скидки: " + decimalFormat.format(ProductPurchaseInfo.getPurchaseSumWithoutDiscount(productPurchaseInfo)));
-            if (productPurchaseInfo.getDiscount() > 100) {
-                System.out.println("Скидка не может быть больше 100 процентов");
-            } else if (productPurchaseInfo.getDiscount() < 0) {
-                System.out.println("Скидка не может быть меньше 100 процентов");
-            } else {
-                System.out.println("Сумма со скидкой: " + decimalFormat.format(ProductPurchaseInfo.getPurchaseSumWithDiscount(productPurchaseInfo)));
-
-            }
-        } else {
-            System.out.println("Количество товаров и сумма должны быть больше 0");
-        }
+        System.out.println("Сумма без скидки: " + decimalFormat.format(ProductPurchaseInfo.getPurchaseSumWithoutDiscount(productPurchaseInfo)));
+        System.out.println("Сумма со скидкой: " + decimalFormat.format(ProductPurchaseInfo.getPurchaseSumWithDiscount(productPurchaseInfo)));
 
     }
 }
