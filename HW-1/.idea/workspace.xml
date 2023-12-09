@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="618fffe4-d08f-4da4-8571-f240b387e5bd" name="Changes" comment="выполнено первое задание" />
+    <list default="true" id="618fffe4-d08f-4da4-8571-f240b387e5bd" name="Changes" comment="выполнено первое задание">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mts/ru/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mts/ru/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mts/ru/ProductPurchaseInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mts/ru/ProductPurchaseInfo.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -19,6 +24,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+    <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
@@ -37,6 +43,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "feature/HW-1",
     "last_opened_file_path": "D:/MTS_Fintech_academy/HW-1",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -53,6 +60,17 @@
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -74,6 +92,7 @@
       <workItem from="1702043186993" duration="49000" />
       <workItem from="1702043346208" duration="2710000" />
       <workItem from="1702111787274" duration="983000" />
+      <workItem from="1702112897761" duration="2094000" />
     </task>
     <task id="LOCAL-00001" summary="выполнено первое задание">
       <option name="closed" value="true" />
@@ -83,7 +102,23 @@
       <option name="project" value="LOCAL" />
       <updated>1702112269169</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="выполнено первое задание">
+      <option name="closed" value="true" />
+      <created>1702113243437</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702113243437</updated>
+    </task>
+    <task id="LOCAL-00003" summary="выполнено первое задание">
+      <option name="closed" value="true" />
+      <created>1702113295672</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702113295672</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,7 +129,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

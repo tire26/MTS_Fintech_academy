@@ -21,6 +21,15 @@ public class ProductPurchaseInfo {
         this.discount = discount;
     }
 
+    public static Double getPurchaseSumWithoutDiscount(ProductPurchaseInfo productPurchaseInfo) {
+        return productPurchaseInfo.getProductCount() * productPurchaseInfo.getProductCoast();
+    }
+
+    public static Double getPurchaseSumWithDiscount(ProductPurchaseInfo productPurchaseInfo) {
+        Double sumWithoutDiscount = getPurchaseSumWithoutDiscount(productPurchaseInfo);
+        return sumWithoutDiscount - sumWithoutDiscount * productPurchaseInfo.getDiscount() / 100;
+    }
+
     public Integer getProductCount() {
         return productCount;
     }
@@ -32,5 +41,4 @@ public class ProductPurchaseInfo {
     public Double getDiscount() {
         return discount;
     }
-
 }
