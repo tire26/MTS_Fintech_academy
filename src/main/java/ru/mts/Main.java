@@ -1,6 +1,7 @@
 package ru.mts;
 
 import java.text.DecimalFormat;
+import java.util.Optional;
 
 public class Main {
 
@@ -10,7 +11,7 @@ public class Main {
         ProductPurchaseInfo productPurchaseInfo1 = new ProductPurchaseInfo(
                 100,
                 121.75,
-                101.1
+                99.0
         );
         printPurchaseSums(productPurchaseInfo1);
 
@@ -27,11 +28,17 @@ public class Main {
                 59.1
         );
         printPurchaseSums(productPurchaseInfo3);
+
+        printPurchaseSums(null);
     }
 
     public static void printPurchaseSums(ProductPurchaseInfo productPurchaseInfo) {
-        System.out.println("Сумма без скидки: " + decimalFormat.format(ProductPurchaseInfo.getPurchaseSumWithoutDiscount(productPurchaseInfo)));
-        System.out.println("Сумма со скидкой: " + decimalFormat.format(ProductPurchaseInfo.getPurchaseSumWithDiscount(productPurchaseInfo)));
+        Optional<Double> resultWithoutDiscount = ProductPurchaseInfo.getPurchaseSumWithoutDiscount(productPurchaseInfo);
+        Optional<Double> resultWithDiscount = ProductPurchaseInfo.getPurchaseSumWithDiscount(productPurchaseInfo);
 
+        resultWithoutDiscount.ifPresentOrElse(
+                aDouble -> System.out.println("Сумма без скидки: " + decimalFormat.format(aDouble)),
+                () -> System.out.println("Указанный объект имеет null значение"));
+        resultWithDiscount.ifPresent(aDouble -> System.out.println("Сумма со скидкой: " + decimalFormat.format(aDouble)));
     }
 }

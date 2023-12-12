@@ -1,5 +1,8 @@
 package ru.mts;
 
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * ProductPurchaseInfo - класс хранящий информацию
  * о покупке одного типа товара
@@ -27,13 +30,23 @@ public class ProductPurchaseInfo {
         this.productCoast = productCoast;
         this.discount = discount;
     }
-    public static Double getPurchaseSumWithoutDiscount(ProductPurchaseInfo productPurchaseInfo) {
-        return productPurchaseInfo.getProductCount() * productPurchaseInfo.getProductCoast();
+    public static Optional<Double> getPurchaseSumWithoutDiscount(ProductPurchaseInfo productPurchaseInfo) {
+        Optional<Double> result = Optional.empty();
+        if (!Objects.isNull(productPurchaseInfo)) {
+            Double doubleResult = productPurchaseInfo.getProductCount() * productPurchaseInfo.getProductCoast();
+            result = Optional.of(doubleResult);
+        }
+        return result;
     }
 
-    public static Double getPurchaseSumWithDiscount(ProductPurchaseInfo productPurchaseInfo) {
-        Double sumWithoutDiscount = getPurchaseSumWithoutDiscount(productPurchaseInfo);
-        return sumWithoutDiscount - sumWithoutDiscount * productPurchaseInfo.getDiscount() / 100;
+    public static Optional<Double> getPurchaseSumWithDiscount(ProductPurchaseInfo productPurchaseInfo) {
+        Optional<Double> result = Optional.empty();
+        if (!Objects.isNull(productPurchaseInfo)) {
+            Double sumWithoutDiscount = getPurchaseSumWithoutDiscount(productPurchaseInfo).get();
+            Double doubleResult = sumWithoutDiscount - sumWithoutDiscount * productPurchaseInfo.getDiscount() / 100;
+            result = Optional.of(doubleResult);
+        }
+        return result;
     }
 
     public Integer getProductCount() {
