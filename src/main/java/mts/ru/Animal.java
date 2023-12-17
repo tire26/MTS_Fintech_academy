@@ -3,7 +3,7 @@ package mts.ru;
 import java.math.BigDecimal;
 
 /**
- *Интерфейс описывает поведение всех животных
+ * интерфейс описывает поведение всех животных
  */
 public interface Animal {
 
