@@ -37,7 +37,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     public void createUniqueAnimals(int i) {
         int random;
         Animal currAnimal;
-        while (i > 0) {
+        for (int j = 0; j < i; j++) {
             random = (int) (Math.random() * 6);
             if (random > i / 2) {
                 currAnimal = generatePet();
