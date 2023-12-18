@@ -20,7 +20,7 @@ public interface CreateAnimalService {
                 currAnimal = generatePredator();
             }
             i--;
-            System.out.println(currAnimal.getName() + " " + currAnimal.getCharacter() + "\n");
+            System.out.println(currAnimal.getName() + " " + currAnimal.getCharacter());
         }
     }
 

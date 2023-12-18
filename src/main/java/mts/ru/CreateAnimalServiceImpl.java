@@ -45,7 +45,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
                 currAnimal = generatePredator();
             }
             i--;
-            System.out.println(currAnimal.getName() + " " + currAnimal.getBreed() + "\n");
+            System.out.println(currAnimal.getName() + " " + currAnimal.getBreed());
         }
     }
 
@@ -65,7 +65,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
                 currAnimal = generatePredator();
             }
             i--;
-            System.out.println(currAnimal.getName() + " " + currAnimal.getBreed() + "\n");
+            System.out.println(currAnimal.getName() + " " + currAnimal.getBreed());
         } while (i > 0);
     }
 
