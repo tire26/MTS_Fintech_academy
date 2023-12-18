@@ -24,7 +24,17 @@ public interface CreateAnimalService {
         }
     }
 
+    /**
+     * создаёт одного уникального домашнего животного
+     *
+     * @return возвращает питомца
+     */
     Pet generatePet();
 
+    /**
+     * создаёт одного уникального хищника
+     *
+     * @return возвращает хищника
+     */
     Predator generatePredator();
 }
