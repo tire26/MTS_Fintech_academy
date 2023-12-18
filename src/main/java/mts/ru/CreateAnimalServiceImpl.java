@@ -10,6 +10,7 @@ import mts.ru.predator.Shark;
 import mts.ru.predator.Wolf;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 public class CreateAnimalServiceImpl implements CreateAnimalService {
@@ -27,7 +28,8 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     };
 
     private static BigDecimal generateCost(int max, int min) {
-        return BigDecimal.valueOf((min + (Math.random() * max - min)));
+        BigDecimal bigDecimal = BigDecimal.valueOf(min + (Math.random() * max - min));
+        return bigDecimal.setScale(2, RoundingMode.HALF_UP);
     }
 
     /**
