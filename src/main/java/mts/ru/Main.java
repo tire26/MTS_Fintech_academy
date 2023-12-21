@@ -22,6 +22,7 @@ public class Main {
                 return new Shark("кусь", new BigDecimal(20000), "кусается", List.of());
             }
         };
+
         System.out.println("Генерация животных методом из CreateAnimalService");
         createAnimalService.createUniqueAnimals();
 

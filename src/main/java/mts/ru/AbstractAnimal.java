@@ -28,4 +28,26 @@ public abstract class AbstractAnimal implements Animal{
     public String getCharacter() {
         return character;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractAnimal)) return false;
+
+        AbstractAnimal that = (AbstractAnimal) o;
+
+        if (!getBreed().equals(that.getBreed())) return false;
+        if (!getName().equals(that.getName())) return false;
+        if (!getCost().equals(that.getCost())) return false;
+        return getCharacter().equals(that.getCharacter());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getBreed().hashCode();
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getCost().hashCode();
+        result = 31 * result + getCharacter().hashCode();
+        return result;
+    }
 }

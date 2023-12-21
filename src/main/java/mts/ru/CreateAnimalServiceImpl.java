@@ -27,13 +27,9 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             "Кеша", "Гоша", "Чиж", "Пушок", "Лорд"
     };
 
-    private static BigDecimal generateCost(int max, int min) {
-        BigDecimal bigDecimal = BigDecimal.valueOf(min + (Math.random() * max - min));
-        return bigDecimal.setScale(2, RoundingMode.HALF_UP);
-    }
-
     /**
      * создаёт i животных и выводит их клички и породы
+     *
      * @param i - количество создаваемых животных
      */
     public void createUniqueAnimals(int i) {
@@ -47,7 +43,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
                 currAnimal = generatePredator();
             }
             i--;
-            System.out.println(currAnimal.getName() + " " + currAnimal.getBreed());
+            System.out.println(currAnimal.toString());
         }
     }
 
@@ -67,7 +63,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
                 currAnimal = generatePredator();
             }
             i--;
-            System.out.println(currAnimal.getName() + " " + currAnimal.getBreed());
+            System.out.println(currAnimal.toString());
         } while (i > 0);
     }
 
@@ -131,5 +127,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
 
         }
         return predator;
+    }
+
+    private BigDecimal generateCost(int max, int min) {
+        BigDecimal bigDecimal = BigDecimal.valueOf(min + (Math.random() * max - min));
+        return bigDecimal.setScale(2, RoundingMode.HALF_UP);
     }
 }
