@@ -1,37 +1,29 @@
 package mts.ru;
 
-import mts.ru.pet.Parrot;
-import mts.ru.pet.Pet;
-import mts.ru.predator.Predator;
-import mts.ru.predator.Shark;
-
-import java.math.BigDecimal;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        CreateAnimalService createAnimalService = new CreateAnimalService() {
-            @Override
-            public Pet generatePet() {
-                return new Parrot("кеша", new BigDecimal(200), "говорящий");
-            }
-
-            @Override
-            public Predator generatePredator() {
-                return new Shark("кусь", new BigDecimal(20000), "кусается", List.of());
-            }
-        };
-
-        System.out.println("Генерация животных методом из CreateAnimalService");
-        createAnimalService.createUniqueAnimals();
-
-        createAnimalService = new CreateAnimalServiceImpl();
-        System.out.println("Генерация животных методом из CreateAnimalServiceImpl");
+        SearchService searchService = new SearchServiceImpl();
+        CreateAnimalService createAnimalService = new CreateAnimalServiceImpl();
+        List<Animal> animals = createAnimalService.createUniqueAnimals();
         CreateAnimalServiceImpl createAnimalServiceImpl = (CreateAnimalServiceImpl) createAnimalService;
-        createAnimalServiceImpl.createUniqueAnimals();
+        animals.addAll(createAnimalServiceImpl.createUniqueAnimals(5));
 
-        System.out.println("Генерация n животных методом из CreateAnimalServiceImpl");
-        createAnimalServiceImpl.createUniqueAnimals(2);
+        searchService.findDuplicate(animals);
+        System.out.println("-----------------------------------");
+
+        List<String> leapYearNames = searchService.findLeapYearNames(animals);
+        for (String leapYearName : leapYearNames) {
+            System.out.println("Животное с високосным годом рождения: " + leapYearName);
+        }
+        System.out.println("-----------------------------------");
+
+        int N = 10;
+        List<Animal> olderAnimal = searchService.findOlderAnimal(animals, N);
+        for (Animal animal : olderAnimal) {
+            System.out.println("Животное с возрастом больше " + N + " :" + animal.getName());
+        }
     }
 }

@@ -1,40 +1,30 @@
 package mts.ru;
 
-import mts.ru.pet.Pet;
-import mts.ru.predator.Predator;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface CreateAnimalService {
 
     /**
      * создаёт 10 уникальных животных и печатает их клички и черты
      */
-    default void createUniqueAnimals() {
+    default List<Animal> createUniqueAnimals() {
         int i = 10;
-        int random;
+        List<Animal> animals = new ArrayList<>(i);
         Animal currAnimal;
+        AnimalFactory animalFactory;
         while (i > 0) {
-            random = (int) (Math.random() * 6);
-            if (random > i / 2) {
-                currAnimal = generatePet();
-            } else {
-                currAnimal = generatePredator();
-            }
+            animalFactory = getAnimalFactory();
+            currAnimal = animalFactory.createAnimal();
             i--;
-            System.out.println(currAnimal.toString());
+            animals.add(currAnimal);
         }
+        return animals;
     }
 
     /**
-     * создаёт одного уникального домашнего животного
-     *
-     * @return возвращает питомца
+     * Метод создаёь фабрику для создания животного
+     * @return фабрику по созданию животных
      */
-    Pet generatePet();
-
-    /**
-     * создаёт одного уникального хищника
-     *
-     * @return возвращает хищника
-     */
-    Predator generatePredator();
+    AnimalFactory getAnimalFactory();
 }

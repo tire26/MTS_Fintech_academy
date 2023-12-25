@@ -1,6 +1,7 @@
 package mts.ru;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public abstract class AbstractAnimal implements Animal{
 
@@ -8,6 +9,7 @@ public abstract class AbstractAnimal implements Animal{
     protected String name; // имя
     protected BigDecimal cost; // цена в магазине
     protected String character; // характер
+    protected LocalDate birthDate; // дата рождения
 
     @Override
     public String getBreed() {
@@ -30,6 +32,11 @@ public abstract class AbstractAnimal implements Animal{
     }
 
     @Override
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractAnimal)) return false;
@@ -39,7 +46,8 @@ public abstract class AbstractAnimal implements Animal{
         if (!getBreed().equals(that.getBreed())) return false;
         if (!getName().equals(that.getName())) return false;
         if (!getCost().equals(that.getCost())) return false;
-        return getCharacter().equals(that.getCharacter());
+        if (!getCharacter().equals(that.getCharacter())) return false;
+        return getBirthDate().equals(that.getBirthDate());
     }
 
     @Override
@@ -48,6 +56,7 @@ public abstract class AbstractAnimal implements Animal{
         result = 31 * result + getName().hashCode();
         result = 31 * result + getCost().hashCode();
         result = 31 * result + getCharacter().hashCode();
+        result = 31 * result + getBirthDate().hashCode();
         return result;
     }
 }
