@@ -9,12 +9,6 @@ build/
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
-.idea/gradle.xml
-.idea/encodings.xml
-.idea/.name
-.idea/vcs.xml
-gradle/wrapper/gradle-wrapper.properties
-settings.gradle
 *.iws
 *.iml
 *.ipr
