@@ -1,9 +1,9 @@
-package mts.ru;
+package ru.mts;
 
-import mts.ru.pet.Cat;
-import mts.ru.pet.Dog;
-import mts.ru.pet.Parrot;
-import mts.ru.pet.Pet;
+import ru.mts.pet.Cat;
+import ru.mts.pet.Dog;
+import ru.mts.pet.Parrot;
+import ru.mts.pet.Pet;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

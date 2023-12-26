@@ -1,6 +1,6 @@
-package mts.ru.predator;
+package ru.mts.predator;
 
-import mts.ru.AbstractAnimal;
+import ru.mts.AbstractAnimal;
 
 import java.util.List;
 

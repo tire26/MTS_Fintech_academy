@@ -1,6 +1,6 @@
-package mts.ru.pet;
+package ru.mts.pet;
 
-import mts.ru.AbstractAnimal;
+import ru.mts.AbstractAnimal;
 
 public abstract class Pet extends AbstractAnimal {
     protected String voice; // какой-то звук домашнего животного

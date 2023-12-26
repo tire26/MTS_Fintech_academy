@@ -1,44 +1,31 @@
 package ru.mts;
 
-import java.text.DecimalFormat;
-import java.util.Optional;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 public class Main {
-
-    private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
     public static void main(String[] args) {
-        ProductPurchaseInfo productPurchaseInfo1 = new ProductPurchaseInfo(
-                100,
-                121.75,
-                99.0
-        );
-        printPurchaseSums(productPurchaseInfo1);
 
-        ProductPurchaseInfo productPurchaseInfo2 = new ProductPurchaseInfo(
-                1215,
-                1212.25,
-                42.575
-        );
-        printPurchaseSums(productPurchaseInfo2);
+        SearchService searchService = new SearchServiceImpl();
+        CreateAnimalService createAnimalService = new CreateAnimalServiceImpl();
+        List<Animal> animals = createAnimalService.createUniqueAnimals();
+        CreateAnimalServiceImpl createAnimalServiceImpl = (CreateAnimalServiceImpl) createAnimalService;
+        animals.addAll(createAnimalServiceImpl.createUniqueAnimals(5));
 
-        ProductPurchaseInfo productPurchaseInfo3 = new ProductPurchaseInfo(
-                2,
-                150000.00,
-                59.1
-        );
-        printPurchaseSums(productPurchaseInfo3);
+        searchService.findDuplicate(animals);
+        System.out.println("-----------------------------------");
 
-        printPurchaseSums(null);
-    }
+        List<String> leapYearNames = searchService.findLeapYearNames(animals);
+        for (String leapYearName : leapYearNames) {
+            System.out.println("Животное с високосным годом рождения: " + leapYearName);
+        }
+        System.out.println("-----------------------------------");
 
-    public static void printPurchaseSums(ProductPurchaseInfo productPurchaseInfo) {
-        Optional<Double> resultWithoutDiscount = ProductPurchaseInfo.getPurchaseSumWithoutDiscount(productPurchaseInfo);
-        Optional<Double> resultWithDiscount = ProductPurchaseInfo.getPurchaseSumWithDiscount(productPurchaseInfo);
-
-        resultWithoutDiscount.ifPresentOrElse(
-                aDouble -> System.out.println("Сумма без скидки: " + decimalFormat.format(aDouble)),
-                () -> System.out.println("Указанный объект имеет null значение"));
-        resultWithDiscount.ifPresent(aDouble -> System.out.println("Сумма со скидкой: " + decimalFormat.format(aDouble)));
+        int N = 10;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        List<Animal> olderAnimal = searchService.findOlderAnimal(animals, N);
+        for (Animal animal : olderAnimal) {
+            System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
+        }
     }
 }

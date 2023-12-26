@@ -1,9 +1,9 @@
-package mts.ru;
+package ru.mts;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public abstract class AbstractAnimal implements Animal{
+public abstract class AbstractAnimal implements Animal {
 
     protected String breed; // порода
     protected String name; // имя

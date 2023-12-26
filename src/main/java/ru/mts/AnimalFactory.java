@@ -1,4 +1,4 @@
-package mts.ru;
+package ru.mts;
 
 public interface AnimalFactory {
 

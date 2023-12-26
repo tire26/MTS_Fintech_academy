@@ -1,11 +1,11 @@
-package mts.ru;
+package ru.mts;
 
-import mts.ru.pet.Cat;
-import mts.ru.pet.Dog;
-import mts.ru.predator.Crocodile;
-import mts.ru.predator.Predator;
-import mts.ru.predator.Shark;
-import mts.ru.predator.Wolf;
+import ru.mts.pet.Cat;
+import ru.mts.pet.Dog;
+import ru.mts.predator.Crocodile;
+import ru.mts.predator.Predator;
+import ru.mts.predator.Shark;
+import ru.mts.predator.Wolf;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
