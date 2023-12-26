@@ -50,24 +50,22 @@ public class SearchServiceImpl implements SearchService {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
 
-        Set<String> seenNames = new HashSet<>();
-        Set<String> duplicateNames = new HashSet<>();
+        Set<Animal> seenAnimals = new HashSet<>();
+        Set<Animal> duplicateAnimals = new HashSet<>();
 
         for (Animal animal : animals) {
-            if (animal.getBirthDate().getYear() > 0) {
-                String name = animal.getName();
-                if (!seenNames.add(name)) {
-                    duplicateNames.add(name);
-                }
-            } else {
-                System.out.println("Неправильный год рождения животного: " + animal.getName());
+            if (!seenAnimals.add(animal)) {
+                duplicateAnimals.add(animal);
             }
         }
 
-        if (!duplicateNames.isEmpty()) {
-            System.out.println("Повторяющиеся клички животных: " + duplicateNames);
+        if (!duplicateAnimals.isEmpty()) {
+            System.out.println("Повторяющиеся животные:");
+            for (Animal duplicateAnimal : duplicateAnimals) {
+                System.out.println(duplicateAnimal.toString());
+            }
         } else {
-            System.out.println("Повторяющихся названий животных не обнаружено.");
+            System.out.println("Дупликатов животных не обнаружено.");
         }
     }
 

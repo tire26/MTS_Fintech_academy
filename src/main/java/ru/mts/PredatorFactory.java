@@ -89,7 +89,7 @@ public class PredatorFactory implements AnimalFactory {
 
     private LocalDate generateBirthDate(LocalDate minDate, LocalDate maxDate) {
         if (minDate == null || maxDate == null || minDate.isAfter(maxDate)) {
-            throw new IllegalArgumentException("Invalid date range");
+            throw new IllegalArgumentException("Неправильный интервал дат");
         }
         long minDay = minDate.toEpochDay();
         long maxDay = maxDate.toEpochDay();
