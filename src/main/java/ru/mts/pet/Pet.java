@@ -2,11 +2,22 @@ package ru.mts.pet;
 
 import ru.mts.AbstractAnimal;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.StringJoiner;
 
 public abstract class Pet extends AbstractAnimal {
     protected String voice; // какой-то звук домашнего животного
+
+    public Pet(String name, BigDecimal cost, String character, LocalDate birthdate, String breed, String voice) {
+        super.birthDate = birthdate;
+        super.name = name;
+        super.cost = cost;
+        super.character = character;
+        super.breed = breed;
+        this.voice = voice;
+    }
 
     public String getVoice() {
         return voice;

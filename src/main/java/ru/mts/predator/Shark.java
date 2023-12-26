@@ -8,12 +8,7 @@ public class Shark extends Predator {
 
     private final static String SHARK_BREED = "Акула";
 
-    public Shark(String name, BigDecimal cost, String character, List<String> incompatibleAnimals, LocalDate birthdate) {
-        super.breed = SHARK_BREED;
-        super.birthDate = birthdate;
-        super.incompatibleAnimals = incompatibleAnimals;
-        super.name = name;
-        super.cost = cost;
-        super.character = character;
+    public Shark(String name, BigDecimal cost, String character,List<String> incompatibleAnimals,  LocalDate birthdate) {
+        super(name, cost, character, birthdate, SHARK_BREED, incompatibleAnimals);
     }
 }

@@ -9,11 +9,6 @@ public class Parrot extends Pet {
     public final static String PARROT_BREED = "Попугай";
 
     public Parrot(String name, BigDecimal cost, String character, LocalDate birthdate) {
-        super.breed = PARROT_BREED;
-        super.voice = PARROT_VOICE;
-        super.birthDate = birthdate;
-        super.name = name;
-        super.cost = cost;
-        super.character = character;
+        super(name, cost, character, birthdate, PARROT_BREED, PARROT_VOICE);
     }
 }

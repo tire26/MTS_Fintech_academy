@@ -9,11 +9,6 @@ public class Cat extends Pet {
     public final static String CAT_BREED = "Кот";
 
     public Cat(String name, BigDecimal cost, String character, LocalDate birthdate) {
-        super.breed = CAT_BREED;
-        super.voice = CAT_VOICE;
-        super.birthDate = birthdate;
-        super.name = name;
-        super.cost = cost;
-        super.character = character;
+        super(name, cost, character, birthdate, CAT_BREED, CAT_VOICE);
     }
 }

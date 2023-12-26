@@ -2,12 +2,23 @@ package ru.mts.predator;
 
 import ru.mts.AbstractAnimal;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.StringJoiner;
 
 public abstract class Predator extends AbstractAnimal {
     protected List<String> incompatibleAnimals;
+
+    public Predator(String name, BigDecimal cost, String character, LocalDate birthdate, String breed, List<String> incompatibleAnimals) {
+        super.birthDate = birthdate;
+        super.name = name;
+        super.cost = cost;
+        super.character = character;
+        super.breed = breed;
+        this.incompatibleAnimals = incompatibleAnimals;
+    }
 
     public List<String> getIncompatibleAnimals() {
         return incompatibleAnimals;
