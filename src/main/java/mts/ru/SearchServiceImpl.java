@@ -10,6 +10,10 @@ public class SearchServiceImpl implements SearchService {
     public List<String> findLeapYearNames(List<Animal> animals) {
         List<String> leapYearNames = new ArrayList<>();
 
+        if (animals == null) {
+            throw new IllegalArgumentException("Список животных не может быть null");
+        }
+
         for (Animal animal : animals) {
             if (animal.getBirthDate().getYear() > 0 && isLeapYear(animal.getBirthDate().getYear())) {
                 leapYearNames.add(animal.getName());
@@ -22,6 +26,10 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public List<Animal> findOlderAnimal(List<Animal> animals, int N) {
         List<Animal> olderAnimals = new ArrayList<>();
+
+        if (animals == null) {
+            throw new IllegalArgumentException("Список животных не может быть null");
+        }
 
         if (N >= 0) {
             for (Animal animal : animals) {
@@ -38,9 +46,8 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public void findDuplicate(List<Animal> animals) {
-        if (animals == null || animals.isEmpty()) {
-            System.out.println("Входной список животных равен нулю или пуст.");
-            return;
+        if (animals == null) {
+            throw new IllegalArgumentException("Список животных не может быть null");
         }
 
         Set<String> seenNames = new HashSet<>();

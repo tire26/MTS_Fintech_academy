@@ -11,15 +11,19 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * @param i - количество создаваемых животных
      */
     public List<Animal> createUniqueAnimals(int i) {
-        List<Animal> animals = new ArrayList<>(i);
-        Animal currAnimal;
-        AnimalFactory animalFactory;
-        for (int j = 0; j < i; j++) {
-            animalFactory = getAnimalFactory(i);
-            currAnimal = animalFactory.createAnimal();
-            animals.add(currAnimal);
+        if (i >= 0) {
+            List<Animal> animals = new ArrayList<>(i);
+            Animal currAnimal;
+            AnimalFactory animalFactory;
+            for (int j = 0; j < i; j++) {
+                animalFactory = getAnimalFactory(i);
+                currAnimal = animalFactory.createAnimal();
+                animals.add(currAnimal);
+            }
+            return animals;
+        } else {
+            return new ArrayList<>();
         }
-        return animals;
     }
 
     /**
