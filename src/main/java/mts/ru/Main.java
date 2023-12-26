@@ -1,5 +1,6 @@
 package mts.ru;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Main {
@@ -21,9 +22,10 @@ public class Main {
         System.out.println("-----------------------------------");
 
         int N = 10;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         List<Animal> olderAnimal = searchService.findOlderAnimal(animals, N);
         for (Animal animal : olderAnimal) {
-            System.out.println("Животное с возрастом больше " + N + " :" + animal.getName());
+            System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
         }
     }
 }
