@@ -1,18 +1,21 @@
 package ru.mts;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class SearchServiceImpl implements SearchService {
 
-    private final int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-
     @Override
-    public List<String> findLeapYearNames(List<Animal> animals) {
-        List<String> leapYearNames = new ArrayList<>();
-
+    public String[] findLeapYearNames(Animal[] animals) {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
+
+        List<String> leapYearNames = new ArrayList<>();
 
         for (Animal animal : animals) {
             if (animal.getBirthDate().getYear() > 0 && isLeapYear(animal.getBirthDate().getYear())) {
@@ -20,32 +23,33 @@ public class SearchServiceImpl implements SearchService {
             }
         }
 
-        return leapYearNames;
+
+        return leapYearNames.toArray(new String[0]);
     }
 
     @Override
-    public List<Animal> findOlderAnimal(List<Animal> animals, int N) {
-        List<Animal> olderAnimals = new ArrayList<>();
-
+    public Animal[] findOlderAnimal(Animal[] animals, int N) {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
-
-        if (N >= 0) {
-            for (Animal animal : animals) {
-                if (animal.getBirthDate().getYear() > 0 && calculateAge(animal.getBirthDate().getYear()) > N) {
-                    olderAnimals.add(animal);
-                }
-            }
-        } else {
-            System.out.println("Указан недопустимый возрастной порог (N).");
+        if (N < 0) {
+            throw new IllegalArgumentException("Указан недопустимый возрастной порог (N).");
         }
 
-        return olderAnimals;
+        List<Animal> olderAnimals = new ArrayList<>();
+
+        for (Animal animal : animals) {
+            if (animal.getBirthDate().getYear() > 0 && calculateAge(animal.getBirthDate(), LocalDate.now()) > N) {
+                olderAnimals.add(animal);
+            }
+        }
+
+
+        return olderAnimals.toArray(new Animal[0]);
     }
 
     @Override
-    public void findDuplicate(List<Animal> animals) {
+    public void findDuplicate(Animal[] animals) {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
@@ -69,11 +73,11 @@ public class SearchServiceImpl implements SearchService {
         }
     }
 
-    private boolean isLeapYear(int year) {
-        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    private int calculateAge(LocalDate birthDate, LocalDate currentDate) {
+        return (int) ChronoUnit.YEARS.between(birthDate, currentDate);
     }
 
-    private int calculateAge(int birthYear) {
-        return currentYear - birthYear;
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 }

@@ -1,8 +1,5 @@
 package ru.mts;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     /**
@@ -10,19 +7,19 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      *
      * @param i - количество создаваемых животных
      */
-    public List<Animal> createUniqueAnimals(int i) {
+    public Animal[] createUniqueAnimals(int i) {
         if (i >= 0) {
-            List<Animal> animals = new ArrayList<>(i);
+            Animal[] animals = new Animal[i];
             Animal currAnimal;
             AnimalFactory animalFactory;
             for (int j = 0; j < i; j++) {
                 animalFactory = getAnimalFactory(i);
                 currAnimal = animalFactory.createAnimal();
-                animals.add(currAnimal);
+                animals[j] = currAnimal;
             }
             return animals;
         } else {
-            return new ArrayList<>();
+            return new Animal[0];
         }
     }
 
@@ -32,16 +29,16 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * @return выводит их клички и породы
      */
     @Override
-    public List<Animal> createUniqueAnimals() {
+    public Animal[] createUniqueAnimals() {
         int i = 10;
-        List<Animal> animals = new ArrayList<>(i);
+        Animal[] animals = new Animal[i];
         AnimalFactory animalFactory;
         Animal currAnimal;
         do {
+            i--;
             animalFactory = getAnimalFactory();
             currAnimal = animalFactory.createAnimal();
-            animals.add(currAnimal);
-            i--;
+            animals[i] = currAnimal;
         } while (i > 0);
         return animals;
     }

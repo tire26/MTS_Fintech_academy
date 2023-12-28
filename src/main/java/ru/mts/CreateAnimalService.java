@@ -1,29 +1,27 @@
 package ru.mts;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public interface CreateAnimalService {
 
     /**
      * создаёт 10 уникальных животных и печатает их клички и черты
      */
-    default List<Animal> createUniqueAnimals() {
+    default Animal[] createUniqueAnimals() {
         int i = 10;
-        List<Animal> animals = new ArrayList<>(i);
+        Animal[] animals = new Animal[i];
         Animal currAnimal;
         AnimalFactory animalFactory;
         while (i > 0) {
             animalFactory = getAnimalFactory();
             currAnimal = animalFactory.createAnimal();
             i--;
-            animals.add(currAnimal);
+            animals[i] = currAnimal;
         }
         return animals;
     }
 
     /**
-     * Метод создаёь фабрику для создания животного
+     * Метод создаёт фабрику для создания животного
+     *
      * @return фабрику по созданию животных
      */
     AnimalFactory getAnimalFactory();

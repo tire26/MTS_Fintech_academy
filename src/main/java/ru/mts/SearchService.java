@@ -1,7 +1,5 @@
 package ru.mts;
 
-import java.util.List;
-
 public interface SearchService {
 
     /**
@@ -9,7 +7,7 @@ public interface SearchService {
      * @param animals массив животных
      * @return массив из имен животных
      */
-    List<String> findLeapYearNames(List<Animal> animals);
+    String[] findLeapYearNames(Animal[] animals);
 
     /**
      * находит всех животных, возраст которых
@@ -18,11 +16,11 @@ public interface SearchService {
      * @param N возраст
      * @return массив животных
      */
-    List<Animal> findOlderAnimal(List<Animal> animals, int N);
+    Animal[] findOlderAnimal(Animal[] animals, int N);
 
     /**
      * выводит на экран дубликаты животных
      * @param animals массив животных
      */
-    void findDuplicate(List<Animal> animals);
+    void findDuplicate(Animal[] animals);
 }

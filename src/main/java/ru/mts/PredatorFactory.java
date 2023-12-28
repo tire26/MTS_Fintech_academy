@@ -10,7 +10,8 @@ import ru.mts.predator.Wolf;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PredatorFactory implements AnimalFactory {
@@ -62,7 +63,7 @@ public class PredatorFactory implements AnimalFactory {
         LocalDate minDate = LocalDate.of(1980, 1, 1);
         LocalDate maxDate = LocalDate.of(2020, 12, 31);
         LocalDate birthdate = generateBirthDate(minDate, maxDate);
-        return new Crocodile(NAMES[randomName], crocodileCost, ANIMAL_CHARACTERS[randomCharacter], List.of(Cat.CAT_BREED, Dog.DOG_BREED), birthdate);
+        return new Crocodile(NAMES[randomName], crocodileCost, ANIMAL_CHARACTERS[randomCharacter], Arrays.asList(Cat.CAT_BREED, Dog.DOG_BREED), birthdate);
     }
 
     private Predator createShark(int randomName, int randomCharacter) {
@@ -70,7 +71,7 @@ public class PredatorFactory implements AnimalFactory {
         LocalDate minDate = LocalDate.of(1990, 1, 1);
         LocalDate maxDate = LocalDate.of(2020, 12, 31);
         LocalDate birthdate = generateBirthDate(minDate, maxDate);
-        return new Shark(NAMES[randomName], sharkCost, ANIMAL_CHARACTERS[randomCharacter], List.of(), birthdate);
+        return new Shark(NAMES[randomName], sharkCost, ANIMAL_CHARACTERS[randomCharacter], Collections.emptyList(), birthdate);
 
     }
 
@@ -79,7 +80,7 @@ public class PredatorFactory implements AnimalFactory {
         LocalDate minDate = LocalDate.of(2008, 1, 1);
         LocalDate maxDate = LocalDate.of(2020, 12, 31);
         LocalDate birthdate = generateBirthDate(minDate, maxDate);
-        return new Wolf(NAMES[randomName], wolfCost, ANIMAL_CHARACTERS[randomCharacter], List.of(Cat.CAT_BREED, Dog.DOG_BREED), birthdate);
+        return new Wolf(NAMES[randomName], wolfCost, ANIMAL_CHARACTERS[randomCharacter], Arrays.asList(Cat.CAT_BREED, Dog.DOG_BREED), birthdate);
     }
 
     private BigDecimal generateCost(int max, int min) {
