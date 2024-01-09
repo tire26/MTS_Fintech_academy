@@ -1,44 +1,45 @@
 package ru.mts;
 
-import java.text.DecimalFormat;
-import java.util.Optional;
+import ru.mts.pet.Parrot;
+import ru.mts.predator.Shark;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class Main {
-
-    private static final DecimalFormat decimalFormat = new DecimalFormat("#.##");
-
     public static void main(String[] args) {
-        ProductPurchaseInfo productPurchaseInfo1 = new ProductPurchaseInfo(
-                100,
-                121.75,
-                99.0
-        );
-        printPurchaseSums(productPurchaseInfo1);
 
-        ProductPurchaseInfo productPurchaseInfo2 = new ProductPurchaseInfo(
-                1215,
-                1212.25,
-                42.575
-        );
-        printPurchaseSums(productPurchaseInfo2);
+        SearchService searchService = new SearchServiceImpl();
+        CreateAnimalServiceImpl createAnimalService = new CreateAnimalServiceImpl();
+        Animal[] animals = createAnimalService.createUniqueAnimals();
+        animals = Stream.concat(Arrays.stream(animals),
+                Arrays.stream(createAnimalService.createUniqueAnimals(5))).toArray(Animal[]::new);
 
-        ProductPurchaseInfo productPurchaseInfo3 = new ProductPurchaseInfo(
-                2,
-                150000.00,
-                59.1
-        );
-        printPurchaseSums(productPurchaseInfo3);
+        List<Animal> duplicateAnimals = new ArrayList<>();
+        duplicateAnimals.add(new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12,
+            28)));
+        duplicateAnimals.add(new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28)));
+        duplicateAnimals.add(new Parrot("кеша", new BigDecimal(200), "говорящий", LocalDate.now()));
+        searchService.findDuplicate(duplicateAnimals.toArray(new Animal[0]));
+        System.out.println("-----------------------------------");
 
-        printPurchaseSums(null);
-    }
+        String[] leapYearNames = searchService.findLeapYearNames(animals);
+        for (String leapYearName : leapYearNames) {
+            System.out.println("Животное с високосным годом рождения: " + leapYearName);
+        }
+        System.out.println("-----------------------------------");
 
-    public static void printPurchaseSums(ProductPurchaseInfo productPurchaseInfo) {
-        Optional<Double> resultWithoutDiscount = ProductPurchaseInfo.getPurchaseSumWithoutDiscount(productPurchaseInfo);
-        Optional<Double> resultWithDiscount = ProductPurchaseInfo.getPurchaseSumWithDiscount(productPurchaseInfo);
-
-        resultWithoutDiscount.ifPresentOrElse(
-                aDouble -> System.out.println("Сумма без скидки: " + decimalFormat.format(aDouble)),
-                () -> System.out.println("Указанный объект имеет null значение"));
-        resultWithDiscount.ifPresent(aDouble -> System.out.println("Сумма со скидкой: " + decimalFormat.format(aDouble)));
+        int N = 15;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        Animal[] olderAnimal = searchService.findOlderAnimal(animals, N);
+        for (Animal animal : olderAnimal) {
+            System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
+        }
     }
 }
