@@ -41,7 +41,7 @@ public class SearchServiceImplTest {
                 new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28))
         };
 
-        olderAnimals = new Animal[] {
+        olderAnimals = new Animal[]{
                 new Parrot("Кеша", new BigDecimal(200), "говорящий", LocalDate.of(2002, 12, 13)),
                 new Shark("Кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28)),
                 new Parrot("Попугайчик", new BigDecimal(150), "говорящий", LocalDate.of(2010, 5, 15)),
@@ -135,7 +135,7 @@ public class SearchServiceImplTest {
     @DisplayName("тест работы метода SearchServiceImpl.findOlderAnimal() с null массивом на вход")
     void testFindOlderAnimalNull() {
         Animal[] arr = null;
-       assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             searchService.findOlderAnimal(arr, 10);
         });
     }

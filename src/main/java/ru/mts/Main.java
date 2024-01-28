@@ -23,7 +23,7 @@ public class Main {
 
         List<Animal> duplicateAnimals = new ArrayList<>();
         duplicateAnimals.add(new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12,
-            28)));
+                28)));
         duplicateAnimals.add(new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28)));
         duplicateAnimals.add(new Parrot("кеша", new BigDecimal(200), "говорящий", LocalDate.now()));
         Animal[] duplicate = searchService.findDuplicate(duplicateAnimals.toArray(new Animal[0]));
