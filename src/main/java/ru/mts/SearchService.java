@@ -18,9 +18,10 @@ public interface SearchService {
      */
     Animal[] findOlderAnimal(Animal[] animals, int N);
 
+
     /**
-     * выводит на экран дубликаты животных
      * @param animals массив животных
+     * @return вовзращает массив животных, у которых есть дупликаты
      */
-    void findDuplicate(Animal[] animals);
+    Animal[] findDuplicate(Animal[] animals);
 }
