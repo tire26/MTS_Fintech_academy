@@ -49,11 +49,10 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public void findDuplicate(Animal[] animals) {
+    public Animal[] findDuplicate(Animal[] animals) {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
-
         Set<Animal> seenAnimals = new HashSet<>();
         Set<Animal> duplicateAnimals = new HashSet<>();
 
@@ -62,15 +61,7 @@ public class SearchServiceImpl implements SearchService {
                 duplicateAnimals.add(animal);
             }
         }
-
-        if (!duplicateAnimals.isEmpty()) {
-            System.out.println("Повторяющиеся животные:");
-            for (Animal duplicateAnimal : duplicateAnimals) {
-                System.out.println(duplicateAnimal.toString());
-            }
-        } else {
-            System.out.println("Дупликатов животных не обнаружено.");
-        }
+        return duplicateAnimals.toArray(new Animal[0]);
     }
 
     private int calculateAge(LocalDate birthDate, LocalDate currentDate) {

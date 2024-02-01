@@ -38,6 +38,7 @@ public abstract class AbstractAnimal implements Animal {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) return false;
         if (this == o) return true;
         if (!(o instanceof AbstractAnimal)) return false;
 

@@ -23,10 +23,11 @@ public class Main {
 
         List<Animal> duplicateAnimals = new ArrayList<>();
         duplicateAnimals.add(new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12,
-            28)));
+                28)));
         duplicateAnimals.add(new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28)));
         duplicateAnimals.add(new Parrot("кеша", new BigDecimal(200), "говорящий", LocalDate.now()));
-        searchService.findDuplicate(duplicateAnimals.toArray(new Animal[0]));
+        Animal[] duplicate = searchService.findDuplicate(duplicateAnimals.toArray(new Animal[0]));
+        printDuplicates(duplicate);
         System.out.println("-----------------------------------");
 
         String[] leapYearNames = searchService.findLeapYearNames(animals);
@@ -40,6 +41,17 @@ public class Main {
         Animal[] olderAnimal = searchService.findOlderAnimal(animals, N);
         for (Animal animal : olderAnimal) {
             System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
+        }
+    }
+
+    private static void printDuplicates(Animal[] animals) {
+        if (animals != null) {
+            System.out.println("Повторяющиеся животные:");
+            for (Animal duplicateAnimal : animals) {
+                System.out.println(duplicateAnimal.toString());
+            }
+        } else {
+            System.out.println("Дупликатов животных не обнаружено.");
         }
     }
 }
