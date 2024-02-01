@@ -16,6 +16,7 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@DisplayName("Тестирование методов класса SearchServiceImpl")
 public class SearchServiceImplTest {
 
     private static Animal[] leapYearTestAnimals;

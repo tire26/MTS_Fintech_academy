@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
+@DisplayName("Тестиование метода equals класса AbstractAnimal")
 public class AbstractAnimalEqualTest {
 
     private static AbstractAnimal cat1;
