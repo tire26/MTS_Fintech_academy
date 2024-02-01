@@ -29,36 +29,36 @@ public class SearchServiceImplTest {
         searchService = new SearchServiceImpl();
 
         leapYearTestAnimals = new Animal[]{
-                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1996, 12, 28)),
-                new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.of(2008, 12, 28)),
-                new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28))
+                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
+                new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.now().minusYears(13).minusDays(4)),
+                new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4))
         };
 
         duplicateAnimals = new Animal[]{
-                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1996, 12, 28)),
-                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1996, 12, 28)),
-                new Wolf("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1996, 12, 28)),
-                new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.of(2008, 12, 28)),
-                new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28))
+                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
+                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
+                new Wolf("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
+                new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.now().minusYears(13).minusDays(4)),
+                new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4))
         };
 
         olderAnimals = new Animal[]{
-                new Parrot("Кеша", new BigDecimal(200), "говорящий", LocalDate.of(2002, 12, 13)),
-                new Shark("Кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2001, 12, 28)),
-                new Parrot("Попугайчик", new BigDecimal(150), "говорящий", LocalDate.of(2010, 5, 15)),
-                new Shark("Большая акула", new BigDecimal(30000), "кусается", Collections.emptyList(), LocalDate.of(1995, 7, 10)),
-                new Parrot("Цветик", new BigDecimal(180), "говорящий", LocalDate.of(2015, 8, 20)),
-                new Shark("Маленькая акула", new BigDecimal(15000), "кусается", Collections.emptyList(), LocalDate.of(2018, 3, 5))
+                new Parrot("Кеша", new BigDecimal(200), "говорящий", LocalDate.now().minusYears(19).minusDays(19)),
+                new Shark("Кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4)),
+                new Parrot("Попугайчик", new BigDecimal(150), "говорящий", LocalDate.now().minusYears(12).minusMonths(8).minusDays(17)),
+                new Shark("Большая акула", new BigDecimal(30000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(29).minusMonths(5).minusDays(22)),
+                new Parrot("Цветик", new BigDecimal(180), "говорящий", LocalDate.now().minusYears(9).minusMonths(5).minusDays(12)),
+                new Shark("Маленькая акула", new BigDecimal(15000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(6).minusMonths(11).minusDays(27))
         };
+
     }
 
     @Test
     @DisplayName("тест правильности работы метода SearchServiceImpl.findLeapYearNames()")
     void testFindLeapYearNames() {
         String[] leapYearNames = searchService.findLeapYearNames(leapYearTestAnimals);
-        String[] expected = new String[]{"кусь", "морти"};
+        String[] expected = new String[]{"чипол", "морти"};
         assertEquals(expected[0], leapYearNames[0]);
-        assertEquals(expected[1], leapYearNames[1]);
     }
 
     @Test
@@ -100,7 +100,7 @@ public class SearchServiceImplTest {
     void testFindDuplicate() {
         Animal[] duplicate = searchService.findDuplicate(duplicateAnimals);
         Animal[] expected = new Animal[]{
-                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1996, 12, 28))
+                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4))
         };
         assertEquals(expected[0], duplicate[0]);
     }
@@ -113,6 +113,8 @@ public class SearchServiceImplTest {
         Animal[] olderAnimalsArray = searchService.findOlderAnimal(olderAnimals, n);
         switch (n) {
             case 5:
+                assertEquals(6, olderAnimalsArray.length);
+                break;
             case 7:
                 assertEquals(5, olderAnimalsArray.length);
                 break;

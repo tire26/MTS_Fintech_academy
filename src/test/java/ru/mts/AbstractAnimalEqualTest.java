@@ -21,13 +21,14 @@ public class AbstractAnimalEqualTest {
     private static AbstractAnimal cat3;
     private static AbstractAnimal dog;
 
+
     @BeforeAll
     static void prepareData() {
-        cat1 = new Cat("Whiskers", BigDecimal.valueOf(2000), "quite", LocalDate.of(2015, 12, 28));
-        cat2 = new Cat("Whiskers", BigDecimal.valueOf(2000), "quite", LocalDate.of(2015, 12, 28));
-        cat3 = new Cat("Whiskers", BigDecimal.valueOf(2000), "quite", LocalDate.of(2015, 12, 28));
+        cat1 = new Cat("Whiskers", BigDecimal.valueOf(2000), "quite", LocalDate.now().minusYears(8).minusMonths(2).minusDays(3));
+        cat2 = new Cat("Whiskers", BigDecimal.valueOf(2000), "quite", LocalDate.now().minusYears(8).minusMonths(2).minusDays(3));
+        cat3 = new Cat("Whiskers", BigDecimal.valueOf(2000), "quite", LocalDate.now().minusYears(8).minusMonths(2).minusDays(3));
 
-        dog = new Dog("Buddy", BigDecimal.valueOf(5000), "crazy", LocalDate.of(2014, 11, 22));
+        dog = new Dog("Buddy", BigDecimal.valueOf(5000), "crazy", LocalDate.now().minusYears(9).minusMonths(3).minusDays(10));
     }
 
     @Test
