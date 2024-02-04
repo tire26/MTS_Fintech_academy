@@ -15,7 +15,6 @@ import java.util.Set;
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
 
-    private static final int START_SIZE = 10;
     private Animal[] animals;
     private CreateAnimalService createAnimalService;
     public AnimalsRepositoryImpl(CreateAnimalService createAnimalService) {

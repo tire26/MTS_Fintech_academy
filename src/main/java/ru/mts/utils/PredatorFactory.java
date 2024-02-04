@@ -40,13 +40,12 @@ public class PredatorFactory implements AnimalFactory {
     public Animal createAnimal() {
         int randomCharacter = (int) (Math.random() * ANIMAL_CHARACTERS.length);
         int randomName = (int) (Math.random() * NAMES.length);
-        Predator predator = switch (animalType) {
+        return switch (animalType) {
             case CROCODILE -> createCrocodile(randomName, randomCharacter);
             case SHARK -> createShark(randomName, randomCharacter);
             case WOLF -> createWolf(randomName, randomCharacter);
             default -> throw new IllegalStateException("Unexpected value: " + animalType);
         };
-        return predator;
     }
 
     @Override

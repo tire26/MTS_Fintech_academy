@@ -40,9 +40,7 @@ public abstract class AbstractAnimal implements Animal {
     public boolean equals(Object o) {
         if (o == null) return false;
         if (this == o) return true;
-        if (!(o instanceof AbstractAnimal)) return false;
-
-        AbstractAnimal that = (AbstractAnimal) o;
+        if (!(o instanceof AbstractAnimal that)) return false;
 
         if (!getBreed().equals(that.getBreed())) return false;
         if (!getName().equals(that.getName())) return false;

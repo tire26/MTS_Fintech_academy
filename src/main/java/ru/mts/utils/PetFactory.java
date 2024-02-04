@@ -36,14 +36,13 @@ public class PetFactory implements AnimalFactory {
     public Animal createAnimal() {
         int randomCharacter = (int) (Math.random() * ANIMAL_CHARACTERS.length);
         int randomName = (int) (Math.random() * NAMES.length);
-        Pet pet = switch (animalType) {
+
+        return switch (animalType) {
             case CAT -> createCat(randomName, randomCharacter);
             case DOG -> createDog(randomName, randomCharacter);
             case PARROT -> createParrot(randomName, randomCharacter);
             default -> throw new IllegalStateException("Unexpected value: " + animalType);
         };
-
-        return pet;
     }
 
     @Override

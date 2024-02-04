@@ -26,10 +26,8 @@ public abstract class Pet extends AbstractAnimal {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Pet)) return false;
+        if (!(o instanceof Pet pet)) return false;
         if (!super.equals(o)) return false;
-
-        Pet pet = (Pet) o;
 
         return getVoice().equals(pet.getVoice());
     }
