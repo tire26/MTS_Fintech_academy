@@ -27,10 +27,8 @@ public abstract class Predator extends AbstractAnimal {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Predator)) return false;
+        if (!(o instanceof Predator predator)) return false;
         if (!super.equals(o)) return false;
-
-        Predator predator = (Predator) o;
 
         return getIncompatibleAnimals().equals(predator.getIncompatibleAnimals());
     }
