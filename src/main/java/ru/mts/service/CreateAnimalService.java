@@ -1,4 +1,9 @@
-package ru.mts;
+package ru.mts.service;
+
+import ru.mts.SetAnimalType;
+import ru.mts.model.Animal;
+import ru.mts.utils.AnimalFactory;
+import ru.mts.model.AnimalType;
 
 public interface CreateAnimalService {
 
@@ -25,4 +30,7 @@ public interface CreateAnimalService {
      * @return фабрику по созданию животных
      */
     AnimalFactory getAnimalFactory();
+
+    @SetAnimalType(animalType = AnimalType.WOLF)
+    void setAnimalType(AnimalType animalType);
 }

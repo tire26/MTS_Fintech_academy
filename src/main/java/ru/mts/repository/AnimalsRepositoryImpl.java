@@ -1,5 +1,10 @@
-package ru.mts;
+package ru.mts.repository;
 
+import org.springframework.stereotype.Repository;
+import ru.mts.model.Animal;
+import ru.mts.service.CreateAnimalService;
+
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -7,10 +12,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SearchServiceImpl implements SearchService {
+@Repository
+public class AnimalsRepositoryImpl implements AnimalsRepository {
+
+    private static final int START_SIZE = 10;
+    private Animal[] animals;
+    private CreateAnimalService createAnimalService;
+    public AnimalsRepositoryImpl(CreateAnimalService createAnimalService) {
+        this.createAnimalService = createAnimalService;
+    }
+
+    @PostConstruct
+    public void initAnimalsStorage() {
+        animals = createAnimalService.createUniqueAnimals();
+    }
 
     @Override
-    public String[] findLeapYearNames(Animal[] animals) {
+    public String[] findLeapYearNames() {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
@@ -28,7 +46,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public Animal[] findOlderAnimal(Animal[] animals, int N) {
+    public Animal[] findOlderAnimal(int N) {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
@@ -49,7 +67,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
-    public Animal[] findDuplicate(Animal[] animals) {
+    public Animal[] findDuplicate() {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }

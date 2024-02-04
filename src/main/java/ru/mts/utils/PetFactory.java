@@ -1,9 +1,11 @@
-package ru.mts;
+package ru.mts.utils;
 
-import ru.mts.pet.Cat;
-import ru.mts.pet.Dog;
-import ru.mts.pet.Parrot;
-import ru.mts.pet.Pet;
+import ru.mts.model.Animal;
+import ru.mts.model.AnimalType;
+import ru.mts.model.pet.Cat;
+import ru.mts.model.pet.Dog;
+import ru.mts.model.pet.Parrot;
+import ru.mts.model.pet.Pet;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,6 +25,7 @@ public class PetFactory implements AnimalFactory {
             "Шарик", "Рекс", "Бобик", "Тузик", "Дружок",
             "Кеша", "Гоша", "Чиж", "Пушок", "Лорд"
     };
+    private AnimalType animalType;
 
     /**
      * Метод создаёт уникального питомацы
@@ -31,24 +34,21 @@ public class PetFactory implements AnimalFactory {
      */
     @Override
     public Animal createAnimal() {
-        int randomAnimal = (int) (Math.random() * 3);
         int randomCharacter = (int) (Math.random() * ANIMAL_CHARACTERS.length);
         int randomName = (int) (Math.random() * NAMES.length);
-        Pet pet;
+        Pet pet = switch (animalType) {
+            case CAT -> createCat(randomName, randomCharacter);
+            case DOG -> createDog(randomName, randomCharacter);
+            case PARROT -> createParrot(randomName, randomCharacter);
+            default -> throw new IllegalStateException("Unexpected value: " + animalType);
+        };
 
-        switch (randomAnimal) {
-            case 0:
-                pet = createCat(randomName, randomCharacter);
-                break;
-            case 1:
-                pet = createDog(randomName, randomCharacter);
-                break;
-            case 2:
-            default:
-                pet = createParrot(randomName, randomCharacter);
-                break;
-        }
         return pet;
+    }
+
+    @Override
+    public void setAnimalType(AnimalType animalType) {
+        this.animalType = animalType;
     }
 
     private Pet createCat(int randomName, int randomCharacter) {

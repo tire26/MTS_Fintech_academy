@@ -1,4 +1,4 @@
-package ru.mts.predator;
+package ru.mts.model.predator;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

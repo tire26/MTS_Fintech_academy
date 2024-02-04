@@ -1,50 +1,51 @@
-package ru.mts.pet;
+package ru.mts.model.predator;
 
-import ru.mts.AbstractAnimal;
+import ru.mts.model.AbstractAnimal;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.StringJoiner;
 
-public abstract class Pet extends AbstractAnimal {
-    protected String voice; // какой-то звук домашнего животного
+public abstract class Predator extends AbstractAnimal {
+    protected List<String> incompatibleAnimals;
 
-    public Pet(String name, BigDecimal cost, String character, LocalDate birthdate, String breed, String voice) {
+    public Predator(String name, BigDecimal cost, String character, LocalDate birthdate, String breed, List<String> incompatibleAnimals) {
         super.birthDate = birthdate;
         super.name = name;
         super.cost = cost;
         super.character = character;
         super.breed = breed;
-        this.voice = voice;
+        this.incompatibleAnimals = incompatibleAnimals;
     }
 
-    public String getVoice() {
-        return voice;
+    public List<String> getIncompatibleAnimals() {
+        return incompatibleAnimals;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Pet)) return false;
+        if (!(o instanceof Predator)) return false;
         if (!super.equals(o)) return false;
 
-        Pet pet = (Pet) o;
+        Predator predator = (Predator) o;
 
-        return getVoice().equals(pet.getVoice());
+        return getIncompatibleAnimals().equals(predator.getIncompatibleAnimals());
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + getVoice().hashCode();
+        result = 31 * result + getIncompatibleAnimals().hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return new StringJoiner(", ", Pet.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", Predator.class.getSimpleName() + "[", "]")
                 .add("breed='" + breed + "'")
                 .add("name='" + name + "'")
                 .add("cost=" + cost)

@@ -1,6 +1,12 @@
-package ru.mts;
+package ru.mts.service;
+
+import ru.mts.model.Animal;
+import ru.mts.model.AnimalType;
+import ru.mts.utils.AnimalFactory;
 
 public class CreateAnimalServiceImpl implements CreateAnimalService {
+
+    private AnimalType animalType;
 
     /**
      * создаёт i животных и выводит их клички и породы
@@ -13,7 +19,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             Animal currAnimal;
             AnimalFactory animalFactory;
             for (int j = 0; j < i; j++) {
-                animalFactory = getAnimalFactory(i);
+                animalFactory = getAnimalFactory();
                 currAnimal = animalFactory.createAnimal();
                 animals[j] = currAnimal;
             }
@@ -37,6 +43,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         do {
             i--;
             animalFactory = getAnimalFactory();
+            animalFactory.setAnimalType(animalType);
             currAnimal = animalFactory.createAnimal();
             animals[i] = currAnimal;
         } while (i > 0);
@@ -50,25 +57,12 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      */
     @Override
     public AnimalFactory getAnimalFactory() {
-        AnimalFactory animalFactory;
-        int random = (int) (Math.random() * 6);
-        if (random > 10 / 2) {
-            animalFactory = new PetFactory();
-        } else {
-            animalFactory = new PredatorFactory();
-        }
-        return animalFactory;
+        return animalType.getFactory();
     }
 
 
-    private AnimalFactory getAnimalFactory(int animalsCount) {
-        AnimalFactory animalFactory;
-        int random = (int) (Math.random() * animalsCount);
-        if (random > animalsCount / 2) {
-            animalFactory = new PetFactory();
-        } else {
-            animalFactory = new PredatorFactory();
-        }
-        return animalFactory;
+    @Override
+    public void setAnimalType(AnimalType animalType) {
+        this.animalType = animalType;
     }
 }
