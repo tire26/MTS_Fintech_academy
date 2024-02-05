@@ -17,6 +17,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     private Animal[] animals;
     private CreateAnimalService createAnimalService;
+
     public AnimalsRepositoryImpl(CreateAnimalService createAnimalService) {
         this.createAnimalService = createAnimalService;
     }
@@ -66,7 +67,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Animal[] findDuplicate() {
+    public Set<Animal> findDuplicate() {
         if (animals == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
@@ -78,7 +79,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 duplicateAnimals.add(animal);
             }
         }
-        return duplicateAnimals.toArray(new Animal[0]);
+        return duplicateAnimals;
     }
 
     private int calculateAge(LocalDate birthDate, LocalDate currentDate) {

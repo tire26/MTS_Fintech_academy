@@ -5,12 +5,13 @@ import ru.mts.model.Animal;
 import ru.mts.repository.AnimalsRepository;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext("ru.mts");
         AnimalsRepository animalsRepository = applicationContext.getBean(AnimalsRepository.class);
-        Animal[] duplicate = animalsRepository.findDuplicate();
+        Set<Animal> duplicate = animalsRepository.findDuplicate();
         printDuplicates(duplicate);
         System.out.println("-----------------------------------");
 
@@ -28,7 +29,7 @@ public class Main {
         }
     }
 
-    private static void printDuplicates(Animal[] animals) {
+    private static void printDuplicates(Set<Animal> animals) {
         if (animals != null) {
             System.out.println("Повторяющиеся животные:");
             for (Animal duplicateAnimal : animals) {
