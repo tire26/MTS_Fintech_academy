@@ -10,6 +10,7 @@ import ru.mts.model.AnimalType;
 import ru.mts.service.CreateAnimalService;
 
 import java.lang.reflect.Method;
+import java.util.Random;
 
 @Component
 public class AnimalTypeInitializerBeanPostProcessor implements BeanPostProcessor {
@@ -21,12 +22,10 @@ public class AnimalTypeInitializerBeanPostProcessor implements BeanPostProcessor
         for (Class<?> allInterface : allInterfaces) {
             Method[] methods = allInterface.getMethods();
             for (Method method : methods) {
-                if (method.isAnnotationPresent(SetAnimalType.class) && !method.isDefault()) {
-                    SetAnimalType annotation = method.getAnnotation(SetAnimalType.class);
-                    AnimalType animalType = annotation.animalType();
+                if (method.isAnnotationPresent(SetRandomAnimalType.class) && !method.isDefault()) {
                     if (bean instanceof CreateAnimalService) {
                         CreateAnimalService animalService = (CreateAnimalService) bean;
-                        animalService.setAnimalType(animalType);
+                        animalService.setAnimalType(getRandomAnimalType());
                     }
                 }
             }
@@ -37,5 +36,9 @@ public class AnimalTypeInitializerBeanPostProcessor implements BeanPostProcessor
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
+    }
+
+    private static AnimalType getRandomAnimalType() {
+        return AnimalType.values()[new Random().nextInt(AnimalType.values().length)];
     }
 }
