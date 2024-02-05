@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Repository
+@Repository(value = "AnimalsRepository")
 public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     private Animal[] animals;
