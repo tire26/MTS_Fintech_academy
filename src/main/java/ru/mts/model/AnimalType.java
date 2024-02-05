@@ -11,37 +11,37 @@ public enum AnimalType {
     CAT {
         @Override
         public AnimalFactory getFactory() {
-            return new PetFactory();
+            return petFactory;
         }
     },
     CROCODILE {
         @Override
         public AnimalFactory getFactory() {
-            return new PredatorFactory();
+            return predatorFactory;
         }
     },
     DOG {
         @Override
         public AnimalFactory getFactory() {
-            return new PetFactory();
+            return petFactory;
         }
     },
     PARROT {
         @Override
         public AnimalFactory getFactory() {
-            return new PetFactory();
+            return petFactory;
         }
     },
     SHARK {
         @Override
         public AnimalFactory getFactory() {
-            return new PredatorFactory();
+            return predatorFactory;
         }
     },
     WOLF {
         @Override
         public AnimalFactory getFactory() {
-            return new PredatorFactory();
+            return predatorFactory;
         }
     };
 
@@ -49,4 +49,7 @@ public enum AnimalType {
      * @return фабрику, соответсвующую типу животного
      */
     public abstract AnimalFactory getFactory();
+
+    private final static PetFactory petFactory = new PetFactory();
+    private final static PredatorFactory predatorFactory = new PredatorFactory();
 }
