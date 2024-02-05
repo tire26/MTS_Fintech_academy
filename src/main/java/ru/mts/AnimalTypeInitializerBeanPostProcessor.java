@@ -24,7 +24,8 @@ public class AnimalTypeInitializerBeanPostProcessor implements BeanPostProcessor
                 if (method.isAnnotationPresent(SetAnimalType.class) && !method.isDefault()) {
                     SetAnimalType annotation = method.getAnnotation(SetAnimalType.class);
                     AnimalType animalType = annotation.animalType();
-                    if (bean instanceof CreateAnimalService animalService) {
+                    if (bean instanceof CreateAnimalService) {
+                        CreateAnimalService animalService = (CreateAnimalService) bean;
                         animalService.setAnimalType(animalType);
                     }
                 }
