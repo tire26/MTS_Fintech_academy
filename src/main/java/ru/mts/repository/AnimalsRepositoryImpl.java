@@ -41,7 +41,6 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
             }
         }
 
-
         return leapYearNames.toArray(new String[0]);
     }
 
@@ -61,7 +60,6 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 olderAnimals.add(animal);
             }
         }
-
 
         return olderAnimals.toArray(new Animal[0]);
     }

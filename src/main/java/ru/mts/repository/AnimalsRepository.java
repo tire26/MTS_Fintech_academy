@@ -24,7 +24,6 @@ public interface AnimalsRepository {
      */
     Animal[] findOlderAnimal(int N);
 
-
     /**
      * @return вовзращает массив животных в хранилище, у которых есть дупликаты
      */
