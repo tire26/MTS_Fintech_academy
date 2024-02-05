@@ -1,7 +1,5 @@
 package ru.mts;
 
-import ru.mts.model.AnimalType;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
