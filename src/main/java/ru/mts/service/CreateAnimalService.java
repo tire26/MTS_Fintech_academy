@@ -33,6 +33,4 @@ public interface CreateAnimalService {
 
     @SetRandomAnimalType
     void setAnimalType(AnimalType animalType);
-
-
 }
