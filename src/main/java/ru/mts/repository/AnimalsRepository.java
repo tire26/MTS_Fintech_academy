@@ -28,4 +28,6 @@ public interface AnimalsRepository {
      * @return вовзращает массив животных в хранилище, у которых есть дупликаты
      */
     Set<Animal> findDuplicate();
+
+    void printDuplicate();
 }

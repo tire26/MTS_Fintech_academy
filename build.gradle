@@ -18,7 +18,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // https://mavenlibs.com/maven/dependency/org.springframework/spring-context
     implementation group: 'org.springframework', name: 'spring-context', version: '5.3.29'
     implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
 }

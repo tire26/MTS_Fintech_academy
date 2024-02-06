@@ -80,6 +80,19 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         return duplicateAnimals;
     }
 
+    @Override
+    public void printDuplicate() {
+        Set<Animal> animalSet = findDuplicate();
+        if (!animalSet.isEmpty()) {
+            System.out.println("Повторяющиеся животные:");
+            for (Animal duplicateAnimal : animals) {
+                System.out.println(duplicateAnimal.toString());
+            }
+        } else {
+            System.out.println("Дупликатов животных не обнаружено.");
+        }
+    }
+
     private int calculateAge(LocalDate birthDate, LocalDate currentDate) {
         return (int) ChronoUnit.YEARS.between(birthDate, currentDate);
     }

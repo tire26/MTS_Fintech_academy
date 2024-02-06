@@ -5,14 +5,12 @@ import ru.mts.model.Animal;
 import ru.mts.repository.AnimalsRepository;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext("ru.mts");
         AnimalsRepository animalsRepository = applicationContext.getBean(AnimalsRepository.class);
-        Set<Animal> duplicate = animalsRepository.findDuplicate();
-        printDuplicates(duplicate);
+        animalsRepository.printDuplicate();
         System.out.println("-----------------------------------");
 
         String[] leapYearNames = animalsRepository.findLeapYearNames();
@@ -26,17 +24,6 @@ public class Main {
         Animal[] olderAnimal = animalsRepository.findOlderAnimal(N);
         for (Animal animal : olderAnimal) {
             System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
-        }
-    }
-
-    private static void printDuplicates(Set<Animal> animals) {
-        if (animals != null) {
-            System.out.println("Повторяющиеся животные:");
-            for (Animal duplicateAnimal : animals) {
-                System.out.println(duplicateAnimal.toString());
-            }
-        } else {
-            System.out.println("Дупликатов животных не обнаружено.");
         }
     }
 }
