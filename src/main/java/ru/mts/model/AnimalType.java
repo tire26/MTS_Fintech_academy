@@ -1,8 +1,8 @@
 package ru.mts.model;
 
-import ru.mts.utils.AnimalFactory;
-import ru.mts.utils.PetFactory;
-import ru.mts.utils.PredatorFactory;
+import ru.mts.factory.AnimalFactory;
+import ru.mts.factory.PetFactory;
+import ru.mts.factory.PredatorFactory;
 
 /**
  * Перечисление типов животных, с возможностью получить конкретную фабрику этого животного

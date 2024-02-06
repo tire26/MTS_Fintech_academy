@@ -2,7 +2,7 @@ package ru.mts.service;
 
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
-import ru.mts.utils.AnimalFactory;
+import ru.mts.factory.AnimalFactory;
 
 public class CreateAnimalServiceImpl implements CreateAnimalService {
 

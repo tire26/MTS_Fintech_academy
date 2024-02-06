@@ -1,4 +1,4 @@
-package ru.mts.utils;
+package ru.mts.factory;
 
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;

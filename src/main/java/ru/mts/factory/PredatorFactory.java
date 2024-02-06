@@ -1,18 +1,22 @@
-package ru.mts.utils;
+package ru.mts.factory;
 
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
 import ru.mts.model.pet.Cat;
 import ru.mts.model.pet.Dog;
-import ru.mts.model.pet.Parrot;
-import ru.mts.model.pet.Pet;
+import ru.mts.model.predator.Crocodile;
+import ru.mts.model.predator.Predator;
+import ru.mts.model.predator.Shark;
+import ru.mts.model.predator.Wolf;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class PetFactory implements AnimalFactory {
+public class PredatorFactory implements AnimalFactory {
 
     private final static String[] ANIMAL_CHARACTERS = {
             "Ласковый", "игривый", "Спокойный", "Активный", "Умный", "Самостоятельный", "Жизнерадостный",
@@ -28,9 +32,9 @@ public class PetFactory implements AnimalFactory {
     private AnimalType animalType;
 
     /**
-     * Метод создаёт уникального питомацы
+     * метод создаёт уникальное животное хищник
      *
-     * @return возвращает сгенерированного питомца
+     * @return животное
      */
     @Override
     public Animal createAnimal() {
@@ -38,14 +42,14 @@ public class PetFactory implements AnimalFactory {
         int randomName = (int) (Math.random() * NAMES.length);
         Animal animal;
         switch (animalType) {
-            case CAT:
-                animal = createCat(randomName, randomCharacter);
+            case CROCODILE:
+                animal = createCrocodile(randomName, randomCharacter);
                 break;
-            case DOG:
-                animal = createDog(randomName, randomCharacter);
+            case SHARK:
+                animal = createShark(randomName, randomCharacter);
                 break;
-            case PARROT:
-                animal = createParrot(randomName, randomCharacter);
+            case WOLF:
+                animal = createWolf(randomName, randomCharacter);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + animalType);
@@ -58,28 +62,29 @@ public class PetFactory implements AnimalFactory {
         this.animalType = animalType;
     }
 
-    private Pet createCat(int randomName, int randomCharacter) {
-        BigDecimal catCost = generateCost(30000, 5000);
-        LocalDate minDate = LocalDate.of(2010, 1, 1);
+    private Predator createCrocodile(int randomName, int randomCharacter) {
+        BigDecimal crocodileCost = generateCost(3000000, 50000);
+        LocalDate minDate = LocalDate.of(1980, 1, 1);
         LocalDate maxDate = LocalDate.of(2020, 12, 31);
         LocalDate birthdate = generateBirthDate(minDate, maxDate);
-        return new Cat(NAMES[randomName], catCost, ANIMAL_CHARACTERS[randomCharacter], birthdate);
+        return new Crocodile(NAMES[randomName], crocodileCost, ANIMAL_CHARACTERS[randomCharacter], Arrays.asList(Cat.CAT_BREED, Dog.DOG_BREED), birthdate);
     }
 
-    private Pet createDog(int randomName, int randomCharacter) {
-        BigDecimal dogCost = generateCost(50000, 5000);
-        LocalDate minDate = LocalDate.of(2011, 1, 1);
+    private Predator createShark(int randomName, int randomCharacter) {
+        BigDecimal sharkCost = generateCost(30000000, 500000);
+        LocalDate minDate = LocalDate.of(1990, 1, 1);
         LocalDate maxDate = LocalDate.of(2020, 12, 31);
         LocalDate birthdate = generateBirthDate(minDate, maxDate);
-        return new Dog(NAMES[randomName], dogCost, ANIMAL_CHARACTERS[randomCharacter], birthdate);
+        return new Shark(NAMES[randomName], sharkCost, ANIMAL_CHARACTERS[randomCharacter], Collections.emptyList(), birthdate);
+
     }
 
-    private Pet createParrot(int randomName, int randomCharacter) {
-        BigDecimal parrotCost = generateCost(3000, 500);
-        LocalDate minDate = LocalDate.of(2019, 1, 1);
+    private Predator createWolf(int randomName, int randomCharacter) {
+        BigDecimal wolfCost = BigDecimal.valueOf((Math.random() * 300000));
+        LocalDate minDate = LocalDate.of(2008, 1, 1);
         LocalDate maxDate = LocalDate.of(2020, 12, 31);
         LocalDate birthdate = generateBirthDate(minDate, maxDate);
-        return new Parrot(NAMES[randomName], parrotCost, ANIMAL_CHARACTERS[randomCharacter], birthdate);
+        return new Wolf(NAMES[randomName], wolfCost, ANIMAL_CHARACTERS[randomCharacter], Arrays.asList(Cat.CAT_BREED, Dog.DOG_BREED), birthdate);
     }
 
     private BigDecimal generateCost(int max, int min) {
@@ -89,7 +94,7 @@ public class PetFactory implements AnimalFactory {
 
     private LocalDate generateBirthDate(LocalDate minDate, LocalDate maxDate) {
         if (minDate == null || maxDate == null || minDate.isAfter(maxDate)) {
-            throw new IllegalArgumentException("Invalid date range");
+            throw new IllegalArgumentException("Неправильный интервал дат");
         }
         long minDay = minDate.toEpochDay();
         long maxDay = maxDate.toEpochDay();

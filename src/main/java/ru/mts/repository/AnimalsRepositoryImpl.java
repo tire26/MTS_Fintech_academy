@@ -12,11 +12,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Repository(value = "AnimalsRepository")
+@Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     private Animal[] animals;
-    private CreateAnimalService createAnimalService;
+    private final CreateAnimalService createAnimalService;
 
     public AnimalsRepositoryImpl(CreateAnimalService createAnimalService) {
         this.createAnimalService = createAnimalService;

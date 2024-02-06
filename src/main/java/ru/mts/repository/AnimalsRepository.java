@@ -29,5 +29,8 @@ public interface AnimalsRepository {
      */
     Set<Animal> findDuplicate();
 
+    /**
+     * вызывает внутри метод findDuplicate() и выводит в консоль результат
+     */
     void printDuplicate();
 }

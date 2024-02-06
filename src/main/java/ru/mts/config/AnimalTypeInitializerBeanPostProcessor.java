@@ -1,4 +1,4 @@
-package ru.mts;
+package ru.mts.config;
 
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeansException;
@@ -6,6 +6,7 @@ import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
+import ru.mts.SetRandomAnimalType;
 import ru.mts.model.AnimalType;
 import ru.mts.service.CreateAnimalService;
 
