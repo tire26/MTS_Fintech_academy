@@ -1,6 +1,6 @@
-package ru.mts.pet;
+package ru.mts.model.pet;
 
-import ru.mts.AbstractAnimal;
+import ru.mts.model.AbstractAnimal;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,7 +30,6 @@ public abstract class Pet extends AbstractAnimal {
         if (!super.equals(o)) return false;
 
         Pet pet = (Pet) o;
-
         return getVoice().equals(pet.getVoice());
     }
 

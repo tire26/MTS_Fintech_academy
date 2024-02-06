@@ -1,11 +1,13 @@
-package ru.mts;
+package ru.mts.factory;
 
-import ru.mts.pet.Cat;
-import ru.mts.pet.Dog;
-import ru.mts.predator.Crocodile;
-import ru.mts.predator.Predator;
-import ru.mts.predator.Shark;
-import ru.mts.predator.Wolf;
+import ru.mts.model.Animal;
+import ru.mts.model.AnimalType;
+import ru.mts.model.pet.Cat;
+import ru.mts.model.pet.Dog;
+import ru.mts.model.predator.Crocodile;
+import ru.mts.model.predator.Predator;
+import ru.mts.model.predator.Shark;
+import ru.mts.model.predator.Wolf;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -27,6 +29,7 @@ public class PredatorFactory implements AnimalFactory {
             "Шарик", "Рекс", "Бобик", "Тузик", "Дружок",
             "Кеша", "Гоша", "Чиж", "Пушок", "Лорд"
     };
+    private AnimalType animalType;
 
     /**
      * метод создаёт уникальное животное хищник
@@ -35,27 +38,28 @@ public class PredatorFactory implements AnimalFactory {
      */
     @Override
     public Animal createAnimal() {
-        int random = (int) (Math.random() * 3);
         int randomCharacter = (int) (Math.random() * ANIMAL_CHARACTERS.length);
         int randomName = (int) (Math.random() * NAMES.length);
-        Predator predator;
-        switch (random) {
-            case 0: {
-                predator = createCrocodile(randomName, randomCharacter);
+        Animal animal;
+        switch (animalType) {
+            case CROCODILE:
+                animal = createCrocodile(randomName, randomCharacter);
                 break;
-            }
-            case 1: {
-                predator = createShark(randomName, randomCharacter);
+            case SHARK:
+                animal = createShark(randomName, randomCharacter);
                 break;
-            }
-            case 2:
-            default: {
-                predator = createWolf(randomName, randomCharacter);
+            case WOLF:
+                animal = createWolf(randomName, randomCharacter);
                 break;
-            }
-
+            default:
+                throw new IllegalStateException("Unexpected value: " + animalType);
         }
-        return predator;
+        return animal;
+    }
+
+    @Override
+    public void setAnimalType(AnimalType animalType) {
+        this.animalType = animalType;
     }
 
     private Predator createCrocodile(int randomName, int randomCharacter) {

@@ -1,6 +1,6 @@
-package ru.mts.predator;
+package ru.mts.model.predator;
 
-import ru.mts.AbstractAnimal;
+import ru.mts.model.AbstractAnimal;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -29,7 +29,6 @@ public abstract class Predator extends AbstractAnimal {
         if (this == o) return true;
         if (!(o instanceof Predator)) return false;
         if (!super.equals(o)) return false;
-
         Predator predator = (Predator) o;
 
         return getIncompatibleAnimals().equals(predator.getIncompatibleAnimals());

@@ -1,4 +1,4 @@
-package ru.mts;
+package ru.mts.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

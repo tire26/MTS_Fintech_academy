@@ -1,4 +1,4 @@
-package ru.mts;
+package ru.mts.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -41,9 +41,7 @@ public abstract class AbstractAnimal implements Animal {
         if (o == null) return false;
         if (this == o) return true;
         if (!(o instanceof AbstractAnimal)) return false;
-
         AbstractAnimal that = (AbstractAnimal) o;
-
         if (!getBreed().equals(that.getBreed())) return false;
         if (!getName().equals(that.getName())) return false;
         if (!getCost().equals(that.getCost())) return false;

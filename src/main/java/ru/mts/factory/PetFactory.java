@@ -1,9 +1,11 @@
-package ru.mts;
+package ru.mts.factory;
 
-import ru.mts.pet.Cat;
-import ru.mts.pet.Dog;
-import ru.mts.pet.Parrot;
-import ru.mts.pet.Pet;
+import ru.mts.model.Animal;
+import ru.mts.model.AnimalType;
+import ru.mts.model.pet.Cat;
+import ru.mts.model.pet.Dog;
+import ru.mts.model.pet.Parrot;
+import ru.mts.model.pet.Pet;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -23,6 +25,7 @@ public class PetFactory implements AnimalFactory {
             "Шарик", "Рекс", "Бобик", "Тузик", "Дружок",
             "Кеша", "Гоша", "Чиж", "Пушок", "Лорд"
     };
+    private AnimalType animalType;
 
     /**
      * Метод создаёт уникального питомацы
@@ -31,24 +34,28 @@ public class PetFactory implements AnimalFactory {
      */
     @Override
     public Animal createAnimal() {
-        int randomAnimal = (int) (Math.random() * 3);
         int randomCharacter = (int) (Math.random() * ANIMAL_CHARACTERS.length);
         int randomName = (int) (Math.random() * NAMES.length);
-        Pet pet;
-
-        switch (randomAnimal) {
-            case 0:
-                pet = createCat(randomName, randomCharacter);
+        Animal animal;
+        switch (animalType) {
+            case CAT:
+                animal = createCat(randomName, randomCharacter);
                 break;
-            case 1:
-                pet = createDog(randomName, randomCharacter);
+            case DOG:
+                animal = createDog(randomName, randomCharacter);
                 break;
-            case 2:
+            case PARROT:
+                animal = createParrot(randomName, randomCharacter);
+                break;
             default:
-                pet = createParrot(randomName, randomCharacter);
-                break;
+                throw new IllegalStateException("Unexpected value: " + animalType);
         }
-        return pet;
+        return animal;
+    }
+
+    @Override
+    public void setAnimalType(AnimalType animalType) {
+        this.animalType = animalType;
     }
 
     private Pet createCat(int randomName, int randomCharacter) {
