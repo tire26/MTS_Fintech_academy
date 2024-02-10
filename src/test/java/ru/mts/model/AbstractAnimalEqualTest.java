@@ -3,7 +3,6 @@ package ru.mts.model;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import ru.mts.model.AbstractAnimal;
 import ru.mts.model.pet.Cat;
 import ru.mts.model.pet.Dog;
 
