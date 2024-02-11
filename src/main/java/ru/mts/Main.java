@@ -3,7 +3,7 @@ package ru.mts;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import ru.mts.model.Animal;
+import ru.mts.animalsconstructstarter.model.Animal;
 import ru.mts.repository.AnimalsRepository;
 
 import java.time.format.DateTimeFormatter;
