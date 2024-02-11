@@ -1,7 +1,10 @@
 package ru.mts.factory;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
+import ru.mts.model.FactoryType;
 import ru.mts.model.pet.Cat;
 import ru.mts.model.pet.Dog;
 import ru.mts.model.pet.Parrot;
@@ -12,19 +15,17 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
+@Component
 public class PetFactory implements AnimalFactory {
 
-    private final static String[] ANIMAL_CHARACTERS = {
-            "Ласковый", "игривый", "Спокойный", "Активный", "Умный", "Самостоятельный", "Жизнерадостный",
-            "Терпеливый", "Любознательный", "Смешной",
-            "Храбрый", "Сдержанный", "Лидер", "Послушный", "Бесшумный", "Спонтанный", "Нежный", "Заботливый", "Агрессивный", "Решительный",
-            "Беспокойный", "Бдительный", "Непредсказуемый", "Ловкий", "Общительный", "Независимый", "Благородный", "Веселый", "Серьезный"
-    };
-    private final static String[] NAMES = {
-            "Мурка", "Барсик", "Васька", "Матроскин", "Ляля",
-            "Шарик", "Рекс", "Бобик", "Тузик", "Дружок",
-            "Кеша", "Гоша", "Чиж", "Пушок", "Лорд"
-    };
+    @Value("${animals.arrays.petCharacters}")
+    private String[] ANIMAL_CHARACTERS;
+
+    @Value("${animals.arrays.petNames}")
+    private String[] NAMES;
+
+    private final FactoryType factoryType = FactoryType.PET_FACTORY;
+
     private AnimalType animalType;
 
     /**
@@ -56,6 +57,11 @@ public class PetFactory implements AnimalFactory {
     @Override
     public void setAnimalType(AnimalType animalType) {
         this.animalType = animalType;
+    }
+
+    @Override
+    public FactoryType getFactoryType() {
+        return factoryType;
     }
 
     private Pet createCat(int randomName, int randomCharacter) {
@@ -97,4 +103,5 @@ public class PetFactory implements AnimalFactory {
 
         return LocalDate.ofEpochDay(randomDay);
     }
+
 }

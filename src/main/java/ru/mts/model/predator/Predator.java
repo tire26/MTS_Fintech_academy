@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.StringJoiner;
 
 public abstract class Predator extends AbstractAnimal {
-    protected List<String> incompatibleAnimals;
+    protected final List<String> incompatibleAnimals;
 
     public Predator(String name, BigDecimal cost, String character, LocalDate birthdate, String breed, List<String> incompatibleAnimals) {
         super.birthDate = birthdate;

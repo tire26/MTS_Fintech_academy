@@ -1,7 +1,10 @@
 package ru.mts.factory;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
+import ru.mts.model.FactoryType;
 import ru.mts.model.pet.Cat;
 import ru.mts.model.pet.Dog;
 import ru.mts.model.predator.Crocodile;
@@ -16,19 +19,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
+@Component
 public class PredatorFactory implements AnimalFactory {
 
-    private final static String[] ANIMAL_CHARACTERS = {
-            "Ласковый", "игривый", "Спокойный", "Активный", "Умный", "Самостоятельный", "Жизнерадостный",
-            "Терпеливый", "Любознательный", "Смешной",
-            "Храбрый", "Сдержанный", "Лидер", "Послушный", "Бесшумный", "Спонтанный", "Нежный", "Заботливый", "Агрессивный", "Решительный",
-            "Беспокойный", "Бдительный", "Непредсказуемый", "Ловкий", "Общительный", "Независимый", "Благородный", "Веселый", "Серьезный"
-    };
-    private final static String[] NAMES = {
-            "Мурка", "Барсик", "Васька", "Матроскин", "Ляля",
-            "Шарик", "Рекс", "Бобик", "Тузик", "Дружок",
-            "Кеша", "Гоша", "Чиж", "Пушок", "Лорд"
-    };
+    @Value("${animals.arrays.predatorCharacters}")
+    private String[] ANIMAL_CHARACTERS;
+
+    @Value("${animals.arrays.predatorNames}")
+    private String[] NAMES;
+
+    private final FactoryType factoryType = FactoryType.PREDATOR_FACTORY;
+
     private AnimalType animalType;
 
     /**
@@ -60,6 +61,11 @@ public class PredatorFactory implements AnimalFactory {
     @Override
     public void setAnimalType(AnimalType animalType) {
         this.animalType = animalType;
+    }
+
+    @Override
+    public FactoryType getFactoryType() {
+        return factoryType;
     }
 
     private Predator createCrocodile(int randomName, int randomCharacter) {

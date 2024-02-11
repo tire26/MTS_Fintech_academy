@@ -1,55 +1,49 @@
 package ru.mts.model;
 
-import ru.mts.factory.AnimalFactory;
-import ru.mts.factory.PetFactory;
-import ru.mts.factory.PredatorFactory;
-
 /**
  * Перечисление типов животных, с возможностью получить конкретную фабрику этого животного
  */
 public enum AnimalType {
     CAT {
         @Override
-        public AnimalFactory getFactory() {
-            return petFactory;
+        public FactoryType getFactoryType() {
+            return FactoryType.PET_FACTORY;
         }
     },
     CROCODILE {
         @Override
-        public AnimalFactory getFactory() {
-            return predatorFactory;
+        public FactoryType getFactoryType() {
+            return FactoryType.PREDATOR_FACTORY;
         }
     },
     DOG {
         @Override
-        public AnimalFactory getFactory() {
-            return petFactory;
+        public FactoryType getFactoryType() {
+            return FactoryType.PET_FACTORY;
         }
     },
     PARROT {
         @Override
-        public AnimalFactory getFactory() {
-            return petFactory;
+        public FactoryType getFactoryType() {
+            return FactoryType.PET_FACTORY;
         }
     },
     SHARK {
         @Override
-        public AnimalFactory getFactory() {
-            return predatorFactory;
+        public FactoryType getFactoryType() {
+            return FactoryType.PREDATOR_FACTORY;
         }
     },
     WOLF {
         @Override
-        public AnimalFactory getFactory() {
-            return predatorFactory;
+        public FactoryType getFactoryType() {
+            return FactoryType.PREDATOR_FACTORY;
         }
     };
 
     /**
      * @return фабрику, соответсвующую типу животного
      */
-    public abstract AnimalFactory getFactory();
+    public abstract FactoryType getFactoryType();
 
-    private final static PetFactory petFactory = new PetFactory();
-    private final static PredatorFactory predatorFactory = new PredatorFactory();
 }

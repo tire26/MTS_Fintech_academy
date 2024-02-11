@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.StringJoiner;
 
 public abstract class Pet extends AbstractAnimal {
-    protected String voice; // какой-то звук домашнего животного
+    protected final String voice; // какой-то звук домашнего животного
 
     public Pet(String name, BigDecimal cost, String character, LocalDate birthdate, String breed, String voice) {
         super.birthDate = birthdate;

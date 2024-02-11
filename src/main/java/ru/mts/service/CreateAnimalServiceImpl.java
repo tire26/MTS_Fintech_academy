@@ -1,12 +1,17 @@
 package ru.mts.service;
 
+import ru.mts.factory.AnimalFactory;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
-import ru.mts.factory.AnimalFactory;
 
 public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     private AnimalType animalType;
+    private final AnimalFactoryService animalFactoryService;
+
+    public CreateAnimalServiceImpl(AnimalFactoryService animalFactoryService) {
+        this.animalFactoryService = animalFactoryService;
+    }
 
     /**
      * создаёт i животных и выводит их клички и породы
@@ -57,9 +62,8 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      */
     @Override
     public AnimalFactory getAnimalFactory() {
-        return animalType.getFactory();
+        return animalFactoryService.getFactoryBy(animalType.getFactoryType());
     }
-
 
     @Override
     public void setAnimalType(AnimalType animalType) {
