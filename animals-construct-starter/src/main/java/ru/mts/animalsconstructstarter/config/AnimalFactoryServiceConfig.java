@@ -6,14 +6,13 @@ import ru.mts.animalsconstructstarter.factory.AnimalFactory;
 import ru.mts.animalsconstructstarter.service.AnimalFactoryService;
 import ru.mts.animalsconstructstarter.service.AnimalFactoryServiceImpl;
 
-
-import java.util.Map;
+import java.util.List;
 
 @Configuration
 public class AnimalFactoryServiceConfig {
 
     @Bean
-    public AnimalFactoryService animalFactoryService(Map<String, AnimalFactory> animalFactoryMap) {
-        return new AnimalFactoryServiceImpl(animalFactoryMap);
+    public AnimalFactoryService animalFactoryService(List<AnimalFactory> factories) {
+        return new AnimalFactoryServiceImpl(factories);
     }
 }

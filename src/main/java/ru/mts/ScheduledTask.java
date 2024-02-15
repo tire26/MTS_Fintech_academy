@@ -1,5 +1,6 @@
 package ru.mts;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.mts.animalsconstructstarter.model.Animal;
@@ -15,7 +16,7 @@ public class ScheduledTask {
         this.animalsRepository = animalsRepository;
     }
 
-    @Scheduled(fixedRate =60000)
+    @Scheduled(fixedDelayString = "${app.fixedRate}")
     public void task() {
         animalsRepository.printDuplicate();
         System.out.println("-----------------------------------");
