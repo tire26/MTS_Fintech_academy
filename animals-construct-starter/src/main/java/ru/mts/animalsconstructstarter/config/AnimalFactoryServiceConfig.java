@@ -10,7 +10,6 @@ import java.util.List;
 
 @Configuration
 public class AnimalFactoryServiceConfig {
-
     @Bean
     public AnimalFactoryService animalFactoryService(List<AnimalFactory> factories) {
         return new AnimalFactoryServiceImpl(factories);

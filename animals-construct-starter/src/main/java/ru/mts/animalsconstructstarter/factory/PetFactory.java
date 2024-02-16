@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import ru.mts.animalsconstructstarter.model.Animal;
 import ru.mts.animalsconstructstarter.model.AnimalType;
 import ru.mts.animalsconstructstarter.model.FactoryType;
+import ru.mts.animalsconstructstarter.model.pet.Cat;
 import ru.mts.animalsconstructstarter.model.pet.Dog;
 import ru.mts.animalsconstructstarter.model.pet.Parrot;
 import ru.mts.animalsconstructstarter.model.pet.Pet;
-import ru.mts.animalsconstructstarter.model.pet.Cat;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
