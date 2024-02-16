@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group = 'ru.mts'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter:2.7.4'
+    implementation 'org.springframework.boot:spring-boot-autoconfigure:2.7.4'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+}
