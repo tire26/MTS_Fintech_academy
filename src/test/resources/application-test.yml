@@ -1,0 +1,10 @@
+animals:
+  arrays:
+    pet:
+      characters: злой
+      names: игорь
+    predator:
+      characters: добрый
+      names: гена
+app:
+  fixedRate: 2500
