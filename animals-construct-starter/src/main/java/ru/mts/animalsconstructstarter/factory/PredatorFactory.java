@@ -1,7 +1,6 @@
 package ru.mts.animalsconstructstarter.factory;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import ru.mts.animalsconstructstarter.model.Animal;
 import ru.mts.animalsconstructstarter.model.AnimalType;
 import ru.mts.animalsconstructstarter.model.FactoryType;

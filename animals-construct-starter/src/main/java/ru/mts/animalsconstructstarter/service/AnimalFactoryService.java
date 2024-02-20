@@ -2,7 +2,6 @@ package ru.mts.animalsconstructstarter.service;
 
 import ru.mts.animalsconstructstarter.factory.AnimalFactory;
 import ru.mts.animalsconstructstarter.model.AnimalType;
-import ru.mts.animalsconstructstarter.model.FactoryType;
 
 public interface AnimalFactoryService {
 

@@ -41,7 +41,7 @@ public class AnimalsRepositoryTest {
     private AnimalsRepository animalsRepository;
     private Field field;
     @PostConstruct
-    public void init() throws NoSuchFieldException, IllegalAccessException {
+    public void init() throws NoSuchFieldException {
         Field field = animalsRepository.getClass().getDeclaredField("animals");
         field.setAccessible(true);
         this.field = field;
@@ -73,21 +73,15 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест работы метода AnimalsRepository.findLeapYearNames() с null на вход")
     void testFindLeapYearNamesNull() throws IllegalAccessException {
-        Animal[] arr = null;
-        field.set(animalsRepository, arr);
-        assertThrows(IllegalArgumentException.class, () -> {
-            animalsRepository.findLeapYearNames();
-        });
+        field.set(animalsRepository, null);
+        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findLeapYearNames());
     }
 
     @Test
     @DisplayName("тест работы метода AnimalsRepository.findDuplicate() с null на вход")
     void testFindDuplicateNull() throws IllegalAccessException {
-        Animal[] arr = null;
-        field.set(animalsRepository, arr);
-        assertThrows(IllegalArgumentException.class, () -> {
-            animalsRepository.findDuplicate();
-        });
+        field.set(animalsRepository, null);
+        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findDuplicate());
     }
 
     @Test
@@ -161,11 +155,8 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест работы метода AnimalsRepository.findOlderAnimal() с null массивом на вход")
     void testFindOlderAnimalNull() throws IllegalAccessException {
-        Animal[] arr = null;
-        field.set(animalsRepository, arr);
-        assertThrows(IllegalArgumentException.class, () -> {
-            animalsRepository.findOlderAnimal(10);
-        });
+        field.set(animalsRepository, null);
+        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findOlderAnimal(10));
     }
 
     @Test
@@ -173,9 +164,7 @@ public class AnimalsRepositoryTest {
     void testFindOlderAnimalWrongOld() throws IllegalAccessException {
         int n = -1;
         field.set(animalsRepository, new Animal[]{});
-        assertThrows(IllegalArgumentException.class, () -> {
-            animalsRepository.findOlderAnimal(n);
-        });
+        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findOlderAnimal(n));
     }
 
 
