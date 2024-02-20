@@ -1,6 +1,8 @@
 package ru.mts.repository;
 
-import ru.mts.animalsconstructstarter.model.Animal;
+
+import ru.mts.model.Animal;
+
 import java.util.Set;
 
 /**

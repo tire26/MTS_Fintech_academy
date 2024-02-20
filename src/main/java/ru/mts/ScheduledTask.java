@@ -3,7 +3,8 @@ package ru.mts;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.mts.animalsconstructstarter.model.Animal;
+
+import ru.mts.model.Animal;
 import ru.mts.repository.AnimalsRepository;
 
 import java.time.format.DateTimeFormatter;
