@@ -13,7 +13,6 @@ import ru.mts.service.AnimalFactoryServiceImpl;
 import java.util.List;
 
 @Configuration
-@Profile("!test")
 public class AnimalFactoryServiceConfig {
     @Bean
     public AnimalFactory petFactory() {

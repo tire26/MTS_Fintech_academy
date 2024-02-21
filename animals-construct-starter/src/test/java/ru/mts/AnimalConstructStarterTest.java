@@ -23,7 +23,7 @@ import ru.mts.service.CreateAnimalService;
 @SpringBootConfiguration
 @DisplayName("Тестирование классов стартера animals-construct-starter")
 @ActiveProfiles("test")
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(locations = "classpath:application-starter-test.yml")
 public class AnimalConstructStarterTest {
 
     private CreateAnimalService createAnimalService;
