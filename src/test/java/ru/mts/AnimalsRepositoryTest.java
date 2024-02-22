@@ -32,7 +32,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 )
 @ActiveProfiles("test")
 @DisplayName("Тестирование класса AnimalsRepository")
-@DirtiesContext
 public class AnimalsRepositoryTest {
 
     private AnimalsRepository animalsRepository;
