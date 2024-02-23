@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  ru.mts.animalsconstructstarter.config.AnimalFactoryServiceConfig, ru.mts.animalsconstructstarter.config.CreateAnimalServiceConfig, ru.mts.animalsconstructstarter.config.AnimalFactoryProperties
+  ru.mts.config.AnimalFactoryServiceConfig, ru.mts.config.CreateAnimalServiceConfig, ru.mts.config.AnimalFactoryProperties

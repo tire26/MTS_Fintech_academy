@@ -1,3 +1,5 @@
+import org.gradle.api.tasks.compile.JavaCompile
+
 plugins {
     id 'java'
 }
@@ -18,5 +20,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter:2.7.4'
     implementation 'org.springframework.boot:spring-boot-autoconfigure:2.7.4'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '2.7.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
 }

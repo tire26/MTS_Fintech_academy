@@ -1,9 +1,8 @@
 package ru.mts.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.mts.animalsconstructstarter.model.Animal;
-import ru.mts.animalsconstructstarter.service.CreateAnimalService;
-
+import ru.mts.model.Animal;
+import ru.mts.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
