@@ -1,16 +1,14 @@
 package ru.mts;
 
-import org.springframework.context.annotation.Profile;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-
-import ru.mts.model.Animal;
+import ru.mts.animalsconstructstarter.model.Animal;
 import ru.mts.repository.AnimalsRepository;
 
 import java.time.format.DateTimeFormatter;
 
 @Component
-@Profile("!test")
 public class ScheduledTask {
     private final AnimalsRepository animalsRepository;
 
