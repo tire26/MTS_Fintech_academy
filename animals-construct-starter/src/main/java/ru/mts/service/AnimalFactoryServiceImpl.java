@@ -13,11 +13,13 @@ import java.util.stream.Collectors;
 public class AnimalFactoryServiceImpl implements AnimalFactoryService {
 
     private final Map<FactoryType, AnimalFactory> factoryTypeAnimalFactoryMap;
+
     public AnimalFactoryServiceImpl(List<AnimalFactory> animalFactoryMap) {
         this.factoryTypeAnimalFactoryMap = animalFactoryMap.stream()
                 .collect(Collectors.toMap(AnimalFactory::getFactoryType, entry -> entry));
     }
 
+    @Override
     public AnimalFactory getFactoryBy(AnimalType animalType) {
         if (animalType != null) {
             AnimalFactory animalFactory = factoryTypeAnimalFactoryMap.get(animalType.getFactoryType());

@@ -1,17 +1,15 @@
 package ru.mts;
 
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import ru.mts.config.AnimalFactoryTestConfig;
-import ru.mts.config.AnimalsRepositoryTestConfig;
 import ru.mts.model.Animal;
 import ru.mts.model.pet.Parrot;
 import ru.mts.model.predator.Shark;
@@ -29,22 +27,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(
-        classes = {AnimalFactoryTestConfig.class, AnimalsRepositoryTestConfig.class}
+        classes = {AnimalFactoryTestConfig.class}
 )
 @ActiveProfiles("test")
 @DisplayName("Тестирование класса AnimalsRepository")
-@TestPropertySource(locations = "classpath:application-test.yml")
-@DirtiesContext
 public class AnimalsRepositoryTest {
 
     private AnimalsRepository animalsRepository;
-    private Field field;
+    private static Field field;
+
     @PostConstruct
     public void init() throws NoSuchFieldException {
         Field field = animalsRepository.getClass().getDeclaredField("animals");
         field.setAccessible(true);
-        this.field = field;
+        AnimalsRepositoryTest.field = field;
     }
+
+    @AfterAll
+    public static void afterAll() {
+        if (field != null) {
+            field.setAccessible(false);
+        }
+    }
+
 
     @Test
     @DisplayName("тест правильности работы метода AnimalsRepository.findLeapYearNames()")

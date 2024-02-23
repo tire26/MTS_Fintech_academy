@@ -61,10 +61,10 @@ public class AnimalConstructStarterTest {
     }
 
     @Test
-    @DisplayName("Проверка количества создаваемых живоных методом createUniqueAnimals()")
+    @DisplayName("Проверка количества создаваемых животных методом createUniqueAnimals()")
     public void testAnimalCreationCount() {
         Animal[] uniqueAnimals = createAnimalService.createUniqueAnimals();
-        Assertions.assertEquals(uniqueAnimals.length, 10);
+        Assertions.assertEquals(10, uniqueAnimals.length);
     }
 
     @Test
