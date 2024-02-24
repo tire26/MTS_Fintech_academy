@@ -133,7 +133,7 @@ public class AnimalsRepositoryTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {5, 7, 10})
+    @ValueSource(ints = {5, 7, 10, 100})
     @DisplayName("тест правильности работы метода AnimalsRepository.findOlderAnimal()")
     void testFindOlderAnimal(int n) throws IllegalAccessException {
         Map<String, List<Animal>> olderAnimals = new HashMap<>();
@@ -151,16 +151,19 @@ public class AnimalsRepositoryTest {
         olderAnimals.put(AnimalType.SHARK.name(), sharks);
         field.set(animalsRepository, olderAnimals);
 
-        Animal[] olderAnimalsArray = animalsRepository.findOlderAnimal(n);
+        Map<Animal, Integer> olderAnimalsArray = animalsRepository.findOlderAnimal(n);
         switch (n) {
             case 5:
-                assertEquals(6, olderAnimalsArray.length);
+                assertEquals(6, olderAnimalsArray.keySet().size());
                 break;
             case 7:
-                assertEquals(5, olderAnimalsArray.length);
+                assertEquals(5, olderAnimalsArray.keySet().size());
                 break;
             case 10:
-                assertEquals(4, olderAnimalsArray.length);
+                assertEquals(4, olderAnimalsArray.keySet().size());
+                break;
+            case 100:
+                assertEquals(1, olderAnimalsArray.keySet().size());
                 break;
             default:
                 throw new IllegalArgumentException("Unexpected value: " + n);
@@ -173,8 +176,8 @@ public class AnimalsRepositoryTest {
         Map<String, List<Animal>> animals = new HashMap<>();
         field.set(animalsRepository, animals);
 
-        Animal[] result = animalsRepository.findOlderAnimal(10);
-        assertEquals(0, result.length);
+        Map<Animal, Integer> result = animalsRepository.findOlderAnimal(10);
+        assertEquals(0, result.keySet().size());
     }
 
     @Test

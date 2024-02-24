@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * интерфейс описывает поведение всех животных
+ * Интерфейс описывает поведение всех животных
  */
 public interface Animal {
 
@@ -19,7 +19,7 @@ public interface Animal {
     String getName();
 
     /**
-     * @return возвразает цену животного в магизине
+     * @return возвращает цену животного в магазине
      */
     BigDecimal getCost();
 

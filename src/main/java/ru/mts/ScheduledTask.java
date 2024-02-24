@@ -31,8 +31,8 @@ public class ScheduledTask {
         }
         int N = 15;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        Animal[] olderAnimal = animalsRepository.findOlderAnimal(N);
-        for (Animal animal : olderAnimal) {
+        Map<Animal, Integer> olderAnimal = animalsRepository.findOlderAnimal(N);
+        for (Animal animal : olderAnimal.keySet()) {
             System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
         }
     }

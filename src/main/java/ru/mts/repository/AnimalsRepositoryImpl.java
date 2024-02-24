@@ -47,24 +47,33 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Animal[] findOlderAnimal(int N) {
+    public Map<Animal, Integer> findOlderAnimal(int N) {
         if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
         if (N < 0) {
             throw new IllegalArgumentException("Указан недопустимый возрастной порог (N).");
         }
-
-        List<Animal> olderAnimals = new ArrayList<>();
+        Animal oldestAnimal = null;
+        int oldestAnimalAge = -1;
+        Map<Animal, Integer> olderAnimalsMap = new HashMap<>();
         for (String s : animalsMap.keySet()) {
             List<Animal> animals = animalsMap.get(s);
             for (Animal animal : animals) {
-                if (animal.getBirthDate().getYear() > 0 && calculateAge(animal.getBirthDate(), LocalDate.now()) > N) {
-                    olderAnimals.add(animal);
+                int animalAge = calculateAge(animal.getBirthDate(), LocalDate.now());
+                if (animalAge > oldestAnimalAge) {
+                    oldestAnimal = animal;
+                    oldestAnimalAge = animalAge;
+                }
+                if (animal.getBirthDate().getYear() > 0 &&  animalAge> N) {
+                    olderAnimalsMap.put(animal, animalAge);
                 }
             }
         }
-        return olderAnimals.toArray(new Animal[0]);
+        if (olderAnimalsMap.keySet().isEmpty() && oldestAnimal != null) {
+            olderAnimalsMap.put(oldestAnimal, oldestAnimalAge);
+        }
+        return olderAnimalsMap;
     }
 
     @Override

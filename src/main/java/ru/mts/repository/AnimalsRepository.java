@@ -21,11 +21,11 @@ public interface AnimalsRepository {
 
     /**
      * Находит всех животных в хранилище, возраст которых
-     * старше N лет
+     * старше N лет, если таких нет, то возвращает самого старшего
      * @param N возраст
      * @return массив животных
      */
-    Animal[] findOlderAnimal(int N);
+    Map<Animal, Integer> findOlderAnimal(int N);
 
     /**
      * @return возвращает массив животных в хранилище, у которых есть дубликаты
