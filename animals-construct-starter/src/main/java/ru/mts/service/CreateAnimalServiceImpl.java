@@ -4,6 +4,11 @@ import ru.mts.factory.AnimalFactory;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class CreateAnimalServiceImpl implements CreateAnimalService {
 
     private AnimalType animalType;
@@ -19,7 +24,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     }
 
     /**
-     * создаёт i животных и выводит их клички и породы
+     * Создаёт i животных и выводит их клички и породы
      *
      * @param i - количество создаваемых животных
      */
@@ -40,12 +45,12 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
     }
 
     /**
-     * создаёт 10 уникальных животных
+     * Создаёт 10 уникальных животных
      *
      * @return выводит их клички и породы
      */
     @Override
-    public Animal[] createUniqueAnimals() {
+    public Map<String, List<Animal>> createUniqueAnimals() {
         int i = 10;
         Animal[] animals = new Animal[i];
         AnimalFactory animalFactory;
@@ -56,11 +61,13 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             currAnimal = animalFactory.createAnimal();
             animals[i] = currAnimal;
         } while (i > 0);
-        return animals;
+        Map<String, List<Animal>> animalsMap = new HashMap<>();
+        animalsMap.put(getAnimalType().name(), Arrays.asList(animals));
+        return animalsMap;
     }
 
     /**
-     * создаёт животных и выводит их клички и породы
+     * Создаёт животных и выводит их клички и породы
      *
      * @return фабрику по созданию животных
      */
@@ -76,5 +83,10 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
         } else {
             throw new IllegalArgumentException();
         }
+    }
+
+    @Override
+    public AnimalType getAnimalType() {
+        return this.animalType;
     }
 }

@@ -7,16 +7,13 @@ import ru.mts.service.CreateAnimalService;
 import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
 
-    private Animal[] animals;
+    private Map<String, List<Animal>> animalsMap;
     private final CreateAnimalService createAnimalService;
 
     public AnimalsRepositoryImpl(CreateAnimalService createAnimalService) {
@@ -25,29 +22,32 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @PostConstruct
     public void initAnimalsStorage() {
-        animals = createAnimalService.createUniqueAnimals();
+        animalsMap = createAnimalService.createUniqueAnimals();
     }
 
     @Override
     public String[] findLeapYearNames() {
-        if (animals == null) {
+        if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
 
         List<String> leapYearNames = new ArrayList<>();
 
-        for (Animal animal : animals) {
-            if (animal.getBirthDate().getYear() > 0 && isLeapYear(animal.getBirthDate().getYear())) {
-                leapYearNames.add(animal.getName());
+        for (String s : animalsMap.keySet()) {
+            List<Animal> animals = animalsMap.get(s);
+
+            for (Animal animal : animals) {
+                if (animal.getBirthDate().getYear() > 0 && isLeapYear(animal.getBirthDate().getYear())) {
+                    leapYearNames.add(animal.getName());
+                }
             }
         }
-
         return leapYearNames.toArray(new String[0]);
     }
 
     @Override
     public Animal[] findOlderAnimal(int N) {
-        if (animals == null) {
+        if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
         if (N < 0) {
@@ -55,27 +55,31 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         }
 
         List<Animal> olderAnimals = new ArrayList<>();
-
-        for (Animal animal : animals) {
-            if (animal.getBirthDate().getYear() > 0 && calculateAge(animal.getBirthDate(), LocalDate.now()) > N) {
-                olderAnimals.add(animal);
+        for (String s : animalsMap.keySet()) {
+            List<Animal> animals = animalsMap.get(s);
+            for (Animal animal : animals) {
+                if (animal.getBirthDate().getYear() > 0 && calculateAge(animal.getBirthDate(), LocalDate.now()) > N) {
+                    olderAnimals.add(animal);
+                }
             }
         }
-
         return olderAnimals.toArray(new Animal[0]);
     }
 
     @Override
     public Set<Animal> findDuplicate() {
-        if (animals == null) {
+        if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
         Set<Animal> seenAnimals = new HashSet<>();
         Set<Animal> duplicateAnimals = new HashSet<>();
 
-        for (Animal animal : animals) {
-            if (!seenAnimals.add(animal)) {
-                duplicateAnimals.add(animal);
+        for (String s : animalsMap.keySet()) {
+            List<Animal> animals = animalsMap.get(s);
+            for (Animal animal : animals) {
+                if (!seenAnimals.add(animal)) {
+                    duplicateAnimals.add(animal);
+                }
             }
         }
         return duplicateAnimals;
@@ -86,11 +90,14 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         Set<Animal> animalSet = findDuplicate();
         if (!animalSet.isEmpty()) {
             System.out.println("Повторяющиеся животные:");
-            for (Animal duplicateAnimal : animals) {
-                System.out.println(duplicateAnimal.toString());
+            for (String s : animalsMap.keySet()) {
+                List<Animal> animals = animalsMap.get(s);
+                for (Animal duplicateAnimal : animals) {
+                    System.out.println(duplicateAnimal.toString());
+                }
             }
         } else {
-            System.out.println("Дупликатов животных не обнаружено.");
+            System.out.println("Дубликатов животных не обнаружено.");
         }
     }
 

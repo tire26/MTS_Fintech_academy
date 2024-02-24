@@ -17,6 +17,9 @@ import ru.mts.model.predator.Wolf;
 import ru.mts.service.AnimalFactoryService;
 import ru.mts.service.CreateAnimalService;
 
+import java.util.List;
+import java.util.Map;
+
 @SpringBootTest(
         classes = {AnimalFactoryTestConfig.class}
 )
@@ -63,8 +66,10 @@ public class AnimalConstructStarterTest {
     @Test
     @DisplayName("Проверка количества создаваемых животных методом createUniqueAnimals()")
     public void testAnimalCreationCount() {
-        Animal[] uniqueAnimals = createAnimalService.createUniqueAnimals();
-        Assertions.assertEquals(10, uniqueAnimals.length);
+        Map<String, List<Animal>> uniqueAnimals = createAnimalService.createUniqueAnimals();
+        for (List<Animal> value : uniqueAnimals.values()) {
+            Assertions.assertEquals(10, value.size());
+        }
     }
 
     @Test

@@ -5,12 +5,17 @@ import ru.mts.factory.AnimalFactory;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public interface CreateAnimalService {
 
     /**
-     * создаёт 10 уникальных животных и печатает их клички и черты
+     * Создаёт 10 уникальных животных и печатает их клички и черты
      */
-    default Animal[] createUniqueAnimals() {
+    default Map<String, List<Animal>> createUniqueAnimals() {
         int i = 10;
         Animal[] animals = new Animal[i];
         Animal currAnimal;
@@ -21,7 +26,9 @@ public interface CreateAnimalService {
             i--;
             animals[i] = currAnimal;
         }
-        return animals;
+        Map<String, List<Animal>> animalsMap = new HashMap<>();
+        animalsMap.put(getAnimalType().name(), Arrays.asList(animals));
+        return animalsMap;
     }
 
     /**
@@ -33,4 +40,6 @@ public interface CreateAnimalService {
 
     @SetRandomAnimalType
     void setAnimalType(AnimalType animalType);
+
+    AnimalType getAnimalType();
 }

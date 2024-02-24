@@ -11,14 +11,14 @@ import java.util.Set;
 public interface AnimalsRepository {
 
     /**
-     * находит всех животных в хранилище которые родились в високосный год
+     * Находит всех животных в хранилище которые родились в високосный год
      *
      * @return массив из имен животных
      */
     String[] findLeapYearNames();
 
     /**
-     * находит всех животных в хранилище, возраст которых
+     * Находит всех животных в хранилище, возраст которых
      * старше N лет
      * @param N возраст
      * @return массив животных
@@ -31,7 +31,7 @@ public interface AnimalsRepository {
     Set<Animal> findDuplicate();
 
     /**
-     * вызывает внутри метод findDuplicate() и выводит в консоль результат
+     * Вызывает внутри метод findDuplicate() и выводит в консоль результат
      */
     void printDuplicate();
 }
