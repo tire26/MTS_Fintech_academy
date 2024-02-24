@@ -26,23 +26,24 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public String[] findLeapYearNames() {
+    public Map<String, LocalDate> findLeapYearNames() {
         if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
 
-        List<String> leapYearNames = new ArrayList<>();
+        Map<String, LocalDate> leapYearNames = new HashMap<>();
 
         for (String s : animalsMap.keySet()) {
             List<Animal> animals = animalsMap.get(s);
 
             for (Animal animal : animals) {
-                if (animal.getBirthDate().getYear() > 0 && isLeapYear(animal.getBirthDate().getYear())) {
-                    leapYearNames.add(animal.getName());
+                int year = animal.getBirthDate().getYear();
+                if (year > 0 && isLeapYear(year)) {
+                    leapYearNames.put(s + " " + animal.getName(), animal.getBirthDate());
                 }
             }
         }
-        return leapYearNames.toArray(new String[0]);
+        return leapYearNames;
     }
 
     @Override

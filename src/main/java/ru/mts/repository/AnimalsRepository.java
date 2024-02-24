@@ -3,6 +3,8 @@ package ru.mts.repository;
 
 import ru.mts.model.Animal;
 
+import java.time.LocalDate;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -15,7 +17,7 @@ public interface AnimalsRepository {
      *
      * @return массив из имен животных
      */
-    String[] findLeapYearNames();
+    Map<String, LocalDate> findLeapYearNames();
 
     /**
      * Находит всех животных в хранилище, возраст которых
@@ -26,7 +28,7 @@ public interface AnimalsRepository {
     Animal[] findOlderAnimal(int N);
 
     /**
-     * @return вовзращает массив животных в хранилище, у которых есть дупликаты
+     * @return возвращает массив животных в хранилище, у которых есть дубликаты
      */
     Set<Animal> findDuplicate();
 
