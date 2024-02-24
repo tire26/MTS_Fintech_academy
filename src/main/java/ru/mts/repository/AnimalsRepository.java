@@ -30,7 +30,7 @@ public interface AnimalsRepository {
     /**
      * @return возвращает массив животных в хранилище, у которых есть дубликаты
      */
-    Set<Animal> findDuplicate();
+    Map<String, Integer> findDuplicate();
 
     /**
      * Вызывает внутри метод findDuplicate() и выводит в консоль результат

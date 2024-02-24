@@ -65,7 +65,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                     oldestAnimal = animal;
                     oldestAnimalAge = animalAge;
                 }
-                if (animal.getBirthDate().getYear() > 0 &&  animalAge> N) {
+                if (animal.getBirthDate().getYear() > 0 && animalAge > N) {
                     olderAnimalsMap.put(animal, animalAge);
                 }
             }
@@ -77,18 +77,19 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     }
 
     @Override
-    public Set<Animal> findDuplicate() {
+    public Map<String, Integer> findDuplicate() {
         if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
         Set<Animal> seenAnimals = new HashSet<>();
-        Set<Animal> duplicateAnimals = new HashSet<>();
+        Map<String, Integer> duplicateAnimals = new HashMap<>();
 
         for (String s : animalsMap.keySet()) {
             List<Animal> animals = animalsMap.get(s);
             for (Animal animal : animals) {
                 if (!seenAnimals.add(animal)) {
-                    duplicateAnimals.add(animal);
+                    int i = duplicateAnimals.get(animal.getBreed()) == null ? 1 : duplicateAnimals.get(animal.getBreed());
+                    duplicateAnimals.put(animal.getBreed(), ++i);
                 }
             }
         }
@@ -97,7 +98,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     @Override
     public void printDuplicate() {
-        Set<Animal> animalSet = findDuplicate();
+        Map<String, Integer> animalSet = findDuplicate();
         if (!animalSet.isEmpty()) {
             System.out.println("Повторяющиеся животные:");
             for (String s : animalsMap.keySet()) {

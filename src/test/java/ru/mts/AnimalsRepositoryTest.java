@@ -102,7 +102,7 @@ public class AnimalsRepositoryTest {
         Map<String, List<Animal>> animals = new HashMap<>();
         field.set(animalsRepository, animals);
 
-        Set<Animal> result = animalsRepository.findDuplicate();
+        Map<String, Integer> result = animalsRepository.findDuplicate();
         assertEquals(0, result.size());
     }
 
@@ -124,12 +124,9 @@ public class AnimalsRepositoryTest {
 
         field.set(animalsRepository, duplicateAnimals);
 
-        Set<Animal> duplicate = animalsRepository.findDuplicate();
-        Animal[] expected = new Animal[]{
-                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4))
-        };
-        Animal next = duplicate.iterator().next();
-        assertEquals(expected[0], next);
+        Map<String, Integer> duplicate = animalsRepository.findDuplicate();
+        String next = duplicate.keySet().iterator().next();
+        assertEquals("Акула", next);
     }
 
     @ParameterizedTest
