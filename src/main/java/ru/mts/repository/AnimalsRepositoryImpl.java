@@ -81,13 +81,13 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
-        Set<Animal> seenAnimals = new HashSet<>();
+        Set<String> seenAnimals = new HashSet<>();
         Map<String, Integer> duplicateAnimals = new HashMap<>();
 
         for (String s : animalsMap.keySet()) {
             List<Animal> animals = animalsMap.get(s);
             for (Animal animal : animals) {
-                if (!seenAnimals.add(animal)) {
+                if (!seenAnimals.add(animal.getBreed())) {
                     int i = duplicateAnimals.get(animal.getBreed()) == null ? 1 : duplicateAnimals.get(animal.getBreed());
                     duplicateAnimals.put(animal.getBreed(), ++i);
                 }
@@ -100,12 +100,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     public void printDuplicate() {
         Map<String, Integer> animalSet = findDuplicate();
         if (!animalSet.isEmpty()) {
-            System.out.println("Повторяющиеся животные:");
-            for (String s : animalsMap.keySet()) {
-                List<Animal> animals = animalsMap.get(s);
-                for (Animal duplicateAnimal : animals) {
-                    System.out.println(duplicateAnimal.toString());
-                }
+            System.out.println("Повторяющиеся типы животных:");
+            for (String s : animalSet.keySet()) {
+                Integer i = animalSet.get(s);
+                System.out.println(s + "=" + i);
             }
         } else {
             System.out.println("Дубликатов животных не обнаружено.");

@@ -126,7 +126,9 @@ public class AnimalsRepositoryTest {
 
         Map<String, Integer> duplicate = animalsRepository.findDuplicate();
         String next = duplicate.keySet().iterator().next();
+        Integer i = duplicate.get(next);
         assertEquals("Акула", next);
+        assertEquals(4, i);
     }
 
     @ParameterizedTest
