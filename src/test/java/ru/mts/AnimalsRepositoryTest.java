@@ -56,9 +56,9 @@ public class AnimalsRepositoryTest {
     void testFindLeapYearNames() throws IllegalAccessException {
         Map<String, List<Animal>> animals = new HashMap<>();
         List<Animal> sharks = new ArrayList<>(List.of(
-                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
-                new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.now().minusYears(13).minusDays(4)),
-                new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4))
+                new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1999, 4, 10)),
+                new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.of(2019, 2, 14)),
+                new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2004, 11, 4))
         ));
         animals.put(AnimalType.SHARK.name(), sharks);
 
@@ -128,7 +128,7 @@ public class AnimalsRepositoryTest {
         String next = duplicate.keySet().iterator().next();
         Integer i = duplicate.get(next);
         assertEquals("Акула", next);
-        assertEquals(4, i);
+        assertEquals(2, i);
     }
 
     @ParameterizedTest
@@ -136,9 +136,10 @@ public class AnimalsRepositoryTest {
     @DisplayName("тест правильности работы метода AnimalsRepository.findOlderAnimal()")
     void testFindOlderAnimal(int n) throws IllegalAccessException {
         Map<String, List<Animal>> olderAnimals = new HashMap<>();
+        Animal oldestAnimal = new Shark("Большая акула", new BigDecimal(30000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(29).minusMonths(5).minusDays(22));
         List<Animal> sharks = new ArrayList<>(List.of(
                 new Shark("Кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4)),
-                new Shark("Большая акула", new BigDecimal(30000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(29).minusMonths(5).minusDays(22)),
+                oldestAnimal,
                 new Shark("Маленькая акула", new BigDecimal(15000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(6).minusMonths(11).minusDays(27))
         ));
         List<Animal> parrots = new ArrayList<>(List.of(
@@ -162,7 +163,9 @@ public class AnimalsRepositoryTest {
                 assertEquals(4, olderAnimalsArray.keySet().size());
                 break;
             case 100:
+                Animal next = olderAnimalsArray.keySet().iterator().next();
                 assertEquals(1, olderAnimalsArray.keySet().size());
+                assertEquals(oldestAnimal, next);
                 break;
             default:
                 throw new IllegalArgumentException("Unexpected value: " + n);

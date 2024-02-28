@@ -81,13 +81,13 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
-        Set<String> seenAnimals = new HashSet<>();
+        Set<Animal> seenAnimals = new HashSet<>();
         Map<String, Integer> duplicateAnimals = new HashMap<>();
 
         for (String s : animalsMap.keySet()) {
             List<Animal> animals = animalsMap.get(s);
             for (Animal animal : animals) {
-                if (!seenAnimals.add(animal.getBreed())) {
+                if (!seenAnimals.add(animal)) {
                     int i = duplicateAnimals.get(animal.getBreed()) == null ? 1 : duplicateAnimals.get(animal.getBreed());
                     duplicateAnimals.put(animal.getBreed(), ++i);
                 }
