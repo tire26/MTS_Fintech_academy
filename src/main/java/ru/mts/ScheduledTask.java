@@ -5,7 +5,9 @@ import org.springframework.stereotype.Component;
 import ru.mts.model.Animal;
 import ru.mts.repository.AnimalsRepository;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 
 @Component
 public class ScheduledTask {
@@ -20,16 +22,17 @@ public class ScheduledTask {
         animalsRepository.printDuplicate();
         System.out.println("-----------------------------------");
 
-        String[] leapYearNames = animalsRepository.findLeapYearNames();
-        for (String leapYearName : leapYearNames) {
-            System.out.println("Животное с високосным годом рождения: " + leapYearName);
-        }
-        System.out.println("-----------------------------------");
+        Map<String, LocalDate> leapYearNames = animalsRepository.findLeapYearNames();
+        for (String s : leapYearNames.keySet()) {
+            LocalDate localDate = leapYearNames.get(s);
+            System.out.println("Животное с високосным годом рождения: " + s + " Дата: " + localDate);
+            System.out.println("-----------------------------------");
 
+        }
         int N = 15;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        Animal[] olderAnimal = animalsRepository.findOlderAnimal(N);
-        for (Animal animal : olderAnimal) {
+        Map<Animal, Integer> olderAnimal = animalsRepository.findOlderAnimal(N);
+        for (Animal animal : olderAnimal.keySet()) {
             System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
         }
     }
