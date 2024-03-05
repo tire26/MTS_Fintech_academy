@@ -4,8 +4,8 @@ package ru.mts.repository;
 import ru.mts.model.Animal;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *  Хранилище создаваемых животных
@@ -30,7 +30,7 @@ public interface AnimalsRepository {
     /**
      * @return возвращает массив животных в хранилище, у которых есть дубликаты
      */
-    Map<String, Integer> findDuplicate();
+    Map<String, List<Animal>> findDuplicate();
 
     /**
      * Вызывает внутри метод findDuplicate() и выводит в консоль результат

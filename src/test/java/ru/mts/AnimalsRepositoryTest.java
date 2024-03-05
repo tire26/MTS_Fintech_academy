@@ -65,7 +65,7 @@ public class AnimalsRepositoryTest {
         field.set(animalsRepository, animals);
 
         Map<String, LocalDate> leapYearNames = animalsRepository.findLeapYearNames();
-        String[] expected = new String[]{"SHARK чипол"};
+        String[] expected = new String[]{"SHARK чипол Акула 20000"};
         for (String s : leapYearNames.keySet()) {
             assertEquals(expected[0], s);
         }
@@ -102,7 +102,7 @@ public class AnimalsRepositoryTest {
         Map<String, List<Animal>> animals = new HashMap<>();
         field.set(animalsRepository, animals);
 
-        Map<String, Integer> result = animalsRepository.findDuplicate();
+        Map<String, List<Animal>> result = animalsRepository.findDuplicate();
         assertEquals(0, result.size());
     }
 
@@ -124,11 +124,11 @@ public class AnimalsRepositoryTest {
 
         field.set(animalsRepository, duplicateAnimals);
 
-        Map<String, Integer> duplicate = animalsRepository.findDuplicate();
+        Map<String, List<Animal>> duplicate = animalsRepository.findDuplicate();
         String next = duplicate.keySet().iterator().next();
-        Integer i = duplicate.get(next);
+        Integer i = duplicate.get(next).size();
         assertEquals("Акула", next);
-        assertEquals(2, i);
+        assertEquals(1, i);
     }
 
     @ParameterizedTest
