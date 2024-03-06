@@ -12,7 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import ru.mts.config.AnimalFactoryTestConfig;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
-import ru.mts.model.pet.Parrot;
+import ru.mts.model.pet.*;
 import ru.mts.model.predator.Shark;
 import ru.mts.model.predator.Wolf;
 import ru.mts.repository.AnimalsRepository;
@@ -23,8 +23,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(
         classes = {AnimalFactoryTestConfig.class}
@@ -198,7 +197,132 @@ public class AnimalsRepositoryTest {
         assertThrows(IllegalArgumentException.class, () -> animalsRepository.findOlderAnimal(n));
     }
 
+    @Test
+    @DisplayName("тест работы метода findAverageAge с null массивом на вход")
+    public void testFindAverageAge_NullList() {
+        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findAverageAge(null));
+    }
 
+    @Test
+    @DisplayName("тест работы метода findAverageAge с массивом из 1 животного")
+    public void testFindAverageAge_OneAnimal() {
+        List<Animal> animals = List.of(new Dog("Dog", BigDecimal.valueOf(20000), "Кусается", LocalDate.now().minusYears(10)));
+        Double averageAge = animalsRepository.findAverageAge(animals);
+        assertEquals(10, averageAge);
+    }
+
+    @Test
+    @DisplayName("тест работы метода findAverageAge с массивом животных")
+    public void testFindAverageAge_MultipleAnimals() {
+        List<Animal> animals = List.of(
+                new Dog("Dog", BigDecimal.valueOf(20000), "Кусается", LocalDate.now().minusYears(3).minusMonths(1)),
+                new Cat("Cat", BigDecimal.valueOf(20), "Ест много", LocalDate.now().minusYears(2).minusMonths(1).minusDays(2)),
+                new Parrot("Bird", BigDecimal.valueOf(200), "Не умеет летать", LocalDate.now().minusMonths(10)),
+                new Parrot("Bird 2", BigDecimal.valueOf(400), "Умеет летать, но не летает", LocalDate.now().minusYears(1).minusDays(10))
+        );
+        Double averageAge = animalsRepository.findAverageAge(animals);
+        assertEquals(1.5, averageAge);
+    }
+
+    @Test
+    @DisplayName("тест метода findOldAndExpensive с null массивом на вход")
+    public void testFindOldAndExpensive_NullList() {
+        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findOldAndExpensive(null));
+    }
+
+
+    @Test
+    @DisplayName("тест метода findOldAndExpensive с массивом животных не старше 5 лет")
+    public void testFindOldAndExpensive_NoOldAndExpensiveAnimals() {
+        List<Animal> animals = List.of(
+                new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
+                new Cat("Cat", BigDecimal.valueOf(200), "", LocalDate.now().minusYears(5).minusMonths(2).minusDays(5)),
+                new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2))
+        );
+        List<Animal> result = animalsRepository.findOldAndExpensive(animals);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    @DisplayName("тест метода findOldAndExpensive с массивом животных c 1 животным подходящем по критериям")
+    public void testFindOldAndExpensive_OneOldAndExpensiveAnimal() {
+        List<Animal> animals = List.of(
+                new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
+                new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5)),
+                new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2))
+        );
+        List<Animal> result = animalsRepository.findOldAndExpensive(animals);
+        assertEquals(1, result.size());
+        assertEquals("Cat", result.get(0).getName());
+    }
+
+    @Test
+    @DisplayName("тест метода findOldAndExpensive с массивом животных подходящих по критериям")
+    public void testFindOldAndExpensive_MultipleOldAndExpensiveAnimals() {
+        Dog dog = new Dog("Dog", BigDecimal.valueOf(600), "", LocalDate.now().minusYears(8).minusMonths(4).minusDays(5));
+        Cat cat = new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5));
+        List<Animal> animals = List.of(
+                dog,
+                cat,
+                new Parrot("Bird", BigDecimal.valueOf(400), "", LocalDate.now().minusYears(8).minusDays(5).minusMonths(2)),
+                new Shark("Shark", BigDecimal.valueOf(300), "", new ArrayList<>(),LocalDate.now().minusDays(20))
+        );
+        List<Animal> result = animalsRepository.findOldAndExpensive(animals);
+        assertEquals(2, result.size());
+        assertTrue(result.contains(dog));
+        assertTrue(result.contains(cat));
+    }
+
+    @Test
+    @DisplayName("тест метода findMinCostAnimals с null массивом")
+    public void testFindMinCostAnimals_NullList() {
+        List<Animal> animals = null;
+        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findMinConstAnimals(animals));
+    }
+
+    @Test
+    @DisplayName("тест метода findMinCostAnimals с массивом из 2 животных")
+    public void testFindMinCostAnimals_LessThanThreeElements() {
+        List<Animal> animals = List.of(
+                new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
+                new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5))
+        );
+        List<String> minCostAnimals = animalsRepository.findMinConstAnimals(animals);
+        assertEquals(2, minCostAnimals.size());
+    }
+
+    @Test
+    @DisplayName("тест метода findMinCostAnimals с массивом из 3 животных")
+    public void testFindMinCostAnimals_ExactlyThreeElements() {
+        List<Animal> animals = List.of(
+                new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
+                new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5)),
+                new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2))
+        );
+        List<String> result = animalsRepository.findMinConstAnimals(animals);
+        assertEquals(3, result.size());
+        assertEquals("Dog", result.get(0));
+        assertEquals("Cat", result.get(1));
+        assertEquals("Bird", result.get(2));
+    }
+
+    @Test
+    @DisplayName("тест метода findMinCostAnimals с массивом из большего количества элементов")
+    public void testFindMinCostAnimals_MoreThanThreeElements() {
+        List<Animal> animals = List.of(
+                new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
+                new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5)),
+                new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2)),
+                new Horse("Horse", BigDecimal.valueOf(400), "", LocalDate.now().minusYears(3).minusDays(5).minusMonths(2)),
+                new Zebra("Zebra", BigDecimal.valueOf(200), "", LocalDate.now().minusYears(5).minusDays(5).minusMonths(2))
+        );
+        List<String> result = animalsRepository.findMinConstAnimals(animals);
+        assertEquals(3, result.size());
+        assertEquals("Zebra", result.get(0));
+        assertEquals("Dog", result.get(1));
+        assertEquals("Bird", result.get(2));
+    }
+    
     @Autowired
     public void setAnimalsRepository(AnimalsRepository animalsRepository) {
         this.animalsRepository = animalsRepository;

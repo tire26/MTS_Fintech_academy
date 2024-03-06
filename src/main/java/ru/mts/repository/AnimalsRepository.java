@@ -36,4 +36,24 @@ public interface AnimalsRepository {
      * Вызывает внутри метод findDuplicate() и выводит в консоль результат
      */
     void printDuplicate();
+
+    /**
+     * Находит средний возраст всех животных и выводит его в консоль
+     * @param animals список животных
+     */
+    Double findAverageAge(List<Animal> animals);
+
+    /**
+     * Ищет животных, возраст которых больше 5 лет и стоимость больше средней стоимости
+     * @param animals список животных
+     * @return отсортированный по дате рождений по возрастанию список
+     */
+    List<Animal> findOldAndExpensive(List<Animal> animals);
+
+    /**
+     * Ищет 3 животных с самой низкой ценой
+     * @param animals список животных
+     * @return список имён животных
+     */
+    List<String> findMinConstAnimals(List<Animal> animals);
 }

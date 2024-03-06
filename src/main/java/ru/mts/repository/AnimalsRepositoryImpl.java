@@ -106,6 +106,54 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         }
     }
 
+    @Override
+    public Double findAverageAge(List<Animal> animals) {
+        if (animals == null) {
+            throw new IllegalArgumentException("Список животных не может быть пустым");
+        }
+
+        double averageYear = animals.stream()
+                .mapToLong(animal -> ChronoUnit.YEARS.between(animal.getBirthDate(), LocalDate.now()))
+                .average()
+                .orElseThrow(() -> new IllegalArgumentException("Не удалось вычислить средний возраст"));
+        System.out.println("Средний возраст животных: " + averageYear);
+        return averageYear;
+    }
+
+    @Override
+    public List<Animal> findOldAndExpensive(List<Animal> animals) {
+        if (animals == null) {
+            throw new IllegalArgumentException("Список животных не может быть пустым");
+        }
+
+        double averagePrice = animals.stream()
+                .mapToLong(value -> value.getCost().longValue())
+                .average()
+                .orElseThrow(() -> new IllegalArgumentException("Не удалось вычислить среднюю цену"));
+
+        return animals.stream()
+                .filter(animal -> ChronoUnit.YEARS.between(animal.getBirthDate(), LocalDate.now()) > 5)
+                .filter(animal -> animal.getCost().longValue() >= averagePrice)
+                .sorted(Comparator.comparing(Animal::getBirthDate))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public List<String> findMinConstAnimals(List<Animal> animals) {
+        if (animals == null) {
+            throw new IllegalArgumentException("Список животных должен содержать хотя бы 3 элемента");
+        }
+
+        return animals.stream()
+                .sorted(Comparator.comparingLong(value -> value.getCost().longValue()))
+                .limit(3)
+                .sorted(Comparator.comparing(Animal::getName).reversed())
+                .map(Animal::getName)
+                .collect(Collectors.toList());
+    }
+
+
     private int calculateAge(LocalDate birthDate, LocalDate currentDate) {
         return (int) ChronoUnit.YEARS.between(birthDate, currentDate);
     }
@@ -114,7 +162,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
     }
 
-    class AnimalWrapper implements Animal {
+    static class AnimalWrapper implements Animal {
         private Integer age;
         private Animal animal;
 
