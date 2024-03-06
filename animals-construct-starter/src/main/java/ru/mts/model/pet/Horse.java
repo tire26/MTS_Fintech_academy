@@ -1,7 +1,5 @@
 package ru.mts.model.pet;
 
-import ru.mts.model.AbstractAnimal;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
