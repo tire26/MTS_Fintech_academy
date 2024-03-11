@@ -12,7 +12,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
 
@@ -34,10 +33,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
 
-        return animalsMap.entrySet().stream()
-                .flatMap(entry -> entry.getValue().stream()
-                        .filter(animal -> animal.getBirthDate().getYear() > 0 && isLeapYear(animal.getBirthDate().getYear()))
-                        .map(animal -> new AbstractMap.SimpleEntry<>(entry.getKey() + " " + animal.getName() + " " + animal.getBreed() + " " + animal.getCost(), animal.getBirthDate())))
+        return animalsMap.values().stream()
+                .flatMap(Collection::stream)
+                .filter(animal -> animal.getBirthDate().getYear() > 0 && isLeapYear(animal.getBirthDate().getYear()))
+                .map(animal -> new AbstractMap.SimpleEntry<>(animal.getName() + " " + animal.getBreed() + " " + animal.getCost(), animal.getBirthDate()))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
@@ -50,27 +49,21 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
             throw new IllegalArgumentException("Указан недопустимый возрастной порог (N).");
         }
 
-        List<AnimalWrapper> animalWrappers = animalsMap.values().stream()
+        List<Map.Entry<Integer, Animal>> animalWrappers = animalsMap.values().stream()
                 .flatMap(Collection::stream)
                 .filter(animal -> animal.getBirthDate().getYear() > 0)
-                .map(animal -> new AnimalWrapper(calculateAge(animal.getBirthDate(), LocalDate.now()), animal))
+                .map(animal -> Map.entry(calculateAge(animal.getBirthDate(), LocalDate.now()), animal))
                 .collect(Collectors.toList());
 
         Map<Animal, Integer> result = animalWrappers.stream()
-                .filter(animal -> animal.getAge() > N)
-                .collect(Collectors.toMap(AnimalWrapper::getAnimal, AnimalWrapper::getAge));
+                .filter(animal -> animal.getKey() > N)
+                .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
 
         if (result.isEmpty() && !animalWrappers.isEmpty()) {
-            result.put(animalWrappers.stream()
-                            .max(Comparator.comparing(AnimalWrapper::getAge))
-                            .get()
-                            .getAnimal(),
-                    animalWrappers.stream()
-                            .max(Comparator.comparing(AnimalWrapper::getAge))
-                            .get()
-                            .getAge());
+            animalWrappers.stream()
+                            .max(Comparator.comparing(Map.Entry::getKey))
+                                    .ifPresent(it -> result.put(it.getValue(), it.getKey()));
         }
-
         return result;
     }
 
@@ -115,7 +108,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         double averageYear = animals.stream()
                 .mapToLong(animal -> ChronoUnit.YEARS.between(animal.getBirthDate(), LocalDate.now()))
                 .average()
-                .orElseThrow(() -> new IllegalArgumentException("Не удалось вычислить средний возраст"));
+                .orElseThrow(() -> new RuntimeException("Не удалось вычислить средний возраст"));
         System.out.println("Средний возраст животных: " + averageYear);
         return averageYear;
     }

@@ -64,7 +64,7 @@ public class AnimalsRepositoryTest {
         field.set(animalsRepository, animals);
 
         Map<String, LocalDate> leapYearNames = animalsRepository.findLeapYearNames();
-        String[] expected = new String[]{"SHARK чипол Акула 20000"};
+        String[] expected = new String[]{"чипол Акула 20000"};
         for (String s : leapYearNames.keySet()) {
             assertEquals(expected[0], s);
         }
