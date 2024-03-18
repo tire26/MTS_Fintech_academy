@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import ru.mts.config.AnimalFactoryTestConfig;
+import ru.mts.exception.Less3AnimalsException;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
 import ru.mts.model.pet.*;
@@ -265,7 +266,7 @@ public class AnimalsRepositoryTest {
                 dog,
                 cat,
                 new Parrot("Bird", BigDecimal.valueOf(400), "", LocalDate.now().minusYears(8).minusDays(5).minusMonths(2)),
-                new Shark("Shark", BigDecimal.valueOf(300), "", new ArrayList<>(),LocalDate.now().minusDays(20))
+                new Shark("Shark", BigDecimal.valueOf(300), "", new ArrayList<>(), LocalDate.now().minusDays(20))
         );
         List<Animal> result = animalsRepository.findOldAndExpensive(animals);
         assertEquals(2, result.size());
@@ -287,8 +288,13 @@ public class AnimalsRepositoryTest {
                 new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
                 new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5))
         );
-        List<String> minCostAnimals = animalsRepository.findMinConstAnimals(animals);
-        assertEquals(2, minCostAnimals.size());
+        List<String> minCostAnimals;
+        try {
+            minCostAnimals = animalsRepository.findMinConstAnimals(animals);
+            assertEquals(2, minCostAnimals.size());
+        } catch (Less3AnimalsException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -299,11 +305,16 @@ public class AnimalsRepositoryTest {
                 new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5)),
                 new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2))
         );
-        List<String> result = animalsRepository.findMinConstAnimals(animals);
-        assertEquals(3, result.size());
-        assertEquals("Dog", result.get(0));
-        assertEquals("Cat", result.get(1));
-        assertEquals("Bird", result.get(2));
+        List<String> result;
+        try {
+            result = animalsRepository.findMinConstAnimals(animals);
+            assertEquals(3, result.size());
+            assertEquals("Dog", result.get(0));
+            assertEquals("Cat", result.get(1));
+            assertEquals("Bird", result.get(2));
+        } catch (Less3AnimalsException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test
@@ -316,13 +327,18 @@ public class AnimalsRepositoryTest {
                 new Horse("Horse", BigDecimal.valueOf(400), "", LocalDate.now().minusYears(3).minusDays(5).minusMonths(2)),
                 new Zebra("Zebra", BigDecimal.valueOf(200), "", LocalDate.now().minusYears(5).minusDays(5).minusMonths(2))
         );
-        List<String> result = animalsRepository.findMinConstAnimals(animals);
-        assertEquals(3, result.size());
-        assertEquals("Zebra", result.get(0));
-        assertEquals("Dog", result.get(1));
-        assertEquals("Bird", result.get(2));
+        List<String> result;
+        try {
+            result = animalsRepository.findMinConstAnimals(animals);
+            assertEquals(3, result.size());
+            assertEquals("Zebra", result.get(0));
+            assertEquals("Dog", result.get(1));
+            assertEquals("Bird", result.get(2));
+        } catch (Less3AnimalsException e) {
+            throw new RuntimeException(e);
+        }
     }
-    
+
     @Autowired
     public void setAnimalsRepository(AnimalsRepository animalsRepository) {
         this.animalsRepository = animalsRepository;

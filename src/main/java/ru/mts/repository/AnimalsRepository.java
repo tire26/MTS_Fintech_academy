@@ -1,6 +1,9 @@
 package ru.mts.repository;
 
 
+import ru.mts.exception.Less3AnimalsException;
+import ru.mts.exception.NullArgumentException;
+import ru.mts.exception.IllegalAgeException;
 import ru.mts.model.Animal;
 
 import java.time.LocalDate;
@@ -55,5 +58,5 @@ public interface AnimalsRepository {
      * @param animals список животных
      * @return список имён животных
      */
-    List<String> findMinConstAnimals(List<Animal> animals);
+    List<String> findMinConstAnimals(List<Animal> animals) throws Less3AnimalsException;
 }
