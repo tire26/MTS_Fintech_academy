@@ -2,8 +2,6 @@ package ru.mts.repository;
 
 
 import ru.mts.exception.Less3AnimalsException;
-import ru.mts.exception.NullArgumentException;
-import ru.mts.exception.IllegalAgeException;
 import ru.mts.model.Animal;
 
 import java.time.LocalDate;
