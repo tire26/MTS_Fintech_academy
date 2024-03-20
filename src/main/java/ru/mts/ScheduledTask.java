@@ -49,7 +49,6 @@ public class ScheduledTask {
             animalsRepository.findMinConstAnimals(animals);
         } catch (IllegalAgeException | Less3AnimalsException e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
         }
     }
 }
