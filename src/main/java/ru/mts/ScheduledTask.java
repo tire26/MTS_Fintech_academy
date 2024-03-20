@@ -2,6 +2,7 @@ package ru.mts;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import ru.mts.exception.IllegalAgeException;
 import ru.mts.exception.Less3AnimalsException;
 import ru.mts.model.Animal;
 import ru.mts.repository.AnimalsRepository;
@@ -35,23 +36,19 @@ public class ScheduledTask {
         }
         int N = 15;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        try {
-            Map<Animal, Integer> olderAnimal = animalsRepository.findOlderAnimal(N);
-            for (Animal animal : olderAnimal.keySet()) {
-                System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-
         AnimalsRepositoryImpl ar = (AnimalsRepositoryImpl) animalsRepository;
         List<Animal> animals = new ArrayList<>();
         for (List<Animal> value : ar.getAnimalsMap().values()) {
             animals.addAll(value);
         }
         try {
+            Map<Animal, Integer> olderAnimal = animalsRepository.findOlderAnimal(N);
+            for (Animal animal : olderAnimal.keySet()) {
+                System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
+            }
             animalsRepository.findMinConstAnimals(animals);
-        } catch (Less3AnimalsException e) {
+        } catch (IllegalAgeException | Less3AnimalsException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }

@@ -48,7 +48,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
             throw new NullArgumentException("Список животных не может быть null");
         }
         if (N < 0) {
-            throw new IllegalAgeException("Указан недопустимый возрастной порог (N).");
+            throw new IllegalAgeException("Указан недопустимый возрастной порог N  < 0");
         }
 
         List<Map.Entry<Integer, Animal>> animalWrappers = animalsMap.values().stream()
@@ -136,6 +136,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     @Override
     public List<String> findMinConstAnimals(List<Animal> animals) throws Less3AnimalsException {
         if (animals == null) {
+            throw new IllegalArgumentException("На вход подан null список");
+        }
+        if (animals.size() < 3) {
             throw new Less3AnimalsException("Список животных должен содержать хотя бы 3 элемента");
         }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import ru.mts.config.AnimalFactoryTestConfig;
+import ru.mts.exception.IllegalAgeException;
 import ru.mts.exception.Less3AnimalsException;
 import ru.mts.model.Animal;
 import ru.mts.model.AnimalType;
@@ -195,7 +196,7 @@ public class AnimalsRepositoryTest {
         int n = -1;
         Map<String, List<Animal>> animals = new HashMap<>();
         field.set(animalsRepository, animals);
-        assertThrows(IllegalArgumentException.class, () -> animalsRepository.findOlderAnimal(n));
+        assertThrows(IllegalAgeException.class, () -> animalsRepository.findOlderAnimal(n));
     }
 
     @Test
@@ -288,13 +289,7 @@ public class AnimalsRepositoryTest {
                 new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
                 new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5))
         );
-        List<String> minCostAnimals;
-        try {
-            minCostAnimals = animalsRepository.findMinConstAnimals(animals);
-            assertEquals(2, minCostAnimals.size());
-        } catch (Less3AnimalsException e) {
-            throw new RuntimeException(e);
-        }
+        assertThrows(Less3AnimalsException.class, () -> animalsRepository.findMinConstAnimals(animals));
     }
 
     @Test

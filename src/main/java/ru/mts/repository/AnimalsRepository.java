@@ -2,6 +2,7 @@ package ru.mts.repository;
 
 
 import ru.mts.exception.Less3AnimalsException;
+import ru.mts.exception.NullArgumentException;
 import ru.mts.model.Animal;
 
 import java.time.LocalDate;
@@ -26,7 +27,7 @@ public interface AnimalsRepository {
      * @param N возраст
      * @return массив животных
      */
-    Map<Animal, Integer> findOlderAnimal(int N);
+    Map<Animal, Integer> findOlderAnimal(int N) throws NullArgumentException;
 
     /**
      * @return возвращает массив животных в хранилище, у которых есть дубликаты
