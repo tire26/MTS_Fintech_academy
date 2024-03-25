@@ -1,11 +1,13 @@
 package ru.mts.repository;
 
 import org.springframework.stereotype.Repository;
+import ru.mts.exception.IllegalAgeException;
+import ru.mts.exception.Less3AnimalsException;
+import ru.mts.exception.NullArgumentException;
 import ru.mts.model.Animal;
 import ru.mts.service.CreateAnimalService;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -43,10 +45,10 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
     @Override
     public Map<Animal, Integer> findOlderAnimal(int N) {
         if (animalsMap == null) {
-            throw new IllegalArgumentException("Список животных не может быть null");
+            throw new NullArgumentException("Список животных не может быть null");
         }
         if (N < 0) {
-            throw new IllegalArgumentException("Указан недопустимый возрастной порог (N).");
+            throw new IllegalAgeException("Указан недопустимый возрастной порог N  < 0");
         }
 
         List<Map.Entry<Integer, Animal>> animalWrappers = animalsMap.values().stream()
@@ -61,8 +63,8 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
         if (result.isEmpty() && !animalWrappers.isEmpty()) {
             animalWrappers.stream()
-                            .max(Comparator.comparing(Map.Entry::getKey))
-                                    .ifPresent(it -> result.put(it.getValue(), it.getKey()));
+                    .max(Map.Entry.comparingByKey())
+                    .ifPresent(it -> result.put(it.getValue(), it.getKey()));
         }
         return result;
     }
@@ -73,7 +75,6 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
         if (animalsMap == null) {
             throw new IllegalArgumentException("Список животных не может быть null");
         }
-
         Map<String, List<Animal>> collect = animalsMap.values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.groupingBy(Animal::toString, Collectors.mapping(Function.identity(), Collectors.toList())))
@@ -133,9 +134,12 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
 
     @Override
-    public List<String> findMinConstAnimals(List<Animal> animals) {
+    public List<String> findMinConstAnimals(List<Animal> animals) throws Less3AnimalsException {
         if (animals == null) {
-            throw new IllegalArgumentException("Список животных должен содержать хотя бы 3 элемента");
+            throw new IllegalArgumentException("На вход подан null список");
+        }
+        if (animals.size() < 3) {
+            throw new Less3AnimalsException("Список животных должен содержать хотя бы 3 элемента");
         }
 
         return animals.stream()
@@ -146,6 +150,9 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 .collect(Collectors.toList());
     }
 
+    public Map<String, List<Animal>> getAnimalsMap() {
+        return animalsMap;
+    }
 
     private int calculateAge(LocalDate birthDate, LocalDate currentDate) {
         return (int) ChronoUnit.YEARS.between(birthDate, currentDate);
@@ -153,56 +160,5 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
 
     private boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-    }
-
-    static class AnimalWrapper implements Animal {
-        private Integer age;
-        private Animal animal;
-
-        public AnimalWrapper(Integer age, Animal animal) {
-            this.age = age;
-            this.animal = animal;
-        }
-
-        public Integer getAge() {
-            return age;
-        }
-
-        public void setAge(Integer age) {
-            this.age = age;
-        }
-
-        public Animal getAnimal() {
-            return animal;
-        }
-
-        public void setAnimal(Animal animal) {
-            this.animal = animal;
-        }
-
-        @Override
-        public String getBreed() {
-            return animal.getBreed();
-        }
-
-        @Override
-        public String getName() {
-            return animal.getName();
-        }
-
-        @Override
-        public BigDecimal getCost() {
-            return animal.getCost();
-        }
-
-        @Override
-        public String getCharacter() {
-            return animal.getCharacter();
-        }
-
-        @Override
-        public LocalDate getBirthDate() {
-            return null;
-        }
     }
 }
