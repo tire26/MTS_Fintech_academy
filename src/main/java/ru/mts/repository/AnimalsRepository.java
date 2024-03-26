@@ -7,7 +7,8 @@ import ru.mts.model.Animal;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  *  Хранилище создаваемых животных
@@ -19,7 +20,7 @@ public interface AnimalsRepository {
      *
      * @return массив из имен животных
      */
-    Map<String, LocalDate> findLeapYearNames();
+    ConcurrentMap<String, LocalDate> findLeapYearNames();
 
     /**
      * Находит всех животных в хранилище, возраст которых
@@ -27,12 +28,12 @@ public interface AnimalsRepository {
      * @param N возраст
      * @return массив животных
      */
-    Map<Animal, Integer> findOlderAnimal(int N) throws NullArgumentException;
+    ConcurrentMap<Animal, Integer> findOlderAnimal(int N) throws NullArgumentException;
 
     /**
      * @return возвращает массив животных в хранилище, у которых есть дубликаты
      */
-    Map<String, List<Animal>> findDuplicate();
+    ConcurrentMap<String, List<Animal>> findDuplicate();
 
     /**
      * Вызывает внутри метод findDuplicate() и выводит в консоль результат
@@ -43,19 +44,19 @@ public interface AnimalsRepository {
      * Находит средний возраст всех животных и выводит его в консоль
      * @param animals список животных
      */
-    Double findAverageAge(List<Animal> animals);
+    Double findAverageAge(CopyOnWriteArrayList<Animal> animals);
 
     /**
      * Ищет животных, возраст которых больше 5 лет и стоимость больше средней стоимости
      * @param animals список животных
      * @return отсортированный по дате рождений по возрастанию список
      */
-    List<Animal> findOldAndExpensive(List<Animal> animals);
+    CopyOnWriteArrayList<Animal> findOldAndExpensive(CopyOnWriteArrayList<Animal> animals);
 
     /**
      * Ищет 3 животных с самой низкой ценой
      * @param animals список животных
      * @return список имён животных
      */
-    List<String> findMinConstAnimals(List<Animal> animals) throws Less3AnimalsException;
+    CopyOnWriteArrayList<String> findMinConstAnimals(CopyOnWriteArrayList<Animal> animals) throws Less3AnimalsException;
 }
