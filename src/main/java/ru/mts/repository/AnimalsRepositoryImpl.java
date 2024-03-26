@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Repository
 public class AnimalsRepositoryImpl implements AnimalsRepository {
 
-    private ConcurrentMap<String, List<Animal>> animalsMap;
+    private ConcurrentMap<String, CopyOnWriteArrayList<Animal>> animalsMap;
     private final CreateAnimalService createAnimalService;
 
     public AnimalsRepositoryImpl(CreateAnimalService createAnimalService) {
@@ -157,7 +157,7 @@ public class AnimalsRepositoryImpl implements AnimalsRepository {
                 .collect(Collectors.toCollection(CopyOnWriteArrayList::new));
     }
 
-    public Map<String, List<Animal>> getAnimalsMap() {
+    public Map<String, CopyOnWriteArrayList<Animal>> getAnimalsMap() {
         return animalsMap;
     }
 

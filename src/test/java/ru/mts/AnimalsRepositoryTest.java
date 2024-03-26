@@ -57,8 +57,8 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест правильности работы метода AnimalsRepository.findLeapYearNames()")
     void testFindLeapYearNames() throws IllegalAccessException {
-        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
-        List<Animal> sharks = new ArrayList<>(List.of(
+        Map<String, CopyOnWriteArrayList<Animal>> animals = new ConcurrentHashMap<>();
+        CopyOnWriteArrayList<Animal> sharks = new CopyOnWriteArrayList<>(List.of(
                 new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1999, 4, 10)),
                 new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.of(2019, 2, 14)),
                 new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(2004, 11, 4))
@@ -113,13 +113,13 @@ public class AnimalsRepositoryTest {
     @DisplayName("тест правильности работы метода AnimalsRepository.findDuplicate()")
     void testFindDuplicate() throws IllegalAccessException {
         Map<String, List<Animal>> duplicateAnimals = new ConcurrentHashMap<>();
-        List<Animal> sharks = new ArrayList<>(List.of(
+        CopyOnWriteArrayList<Animal> sharks = new CopyOnWriteArrayList<>(List.of(
                 new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
                 new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
                 new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.now().minusYears(13).minusDays(4)),
                 new Shark("чипол", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4))
         ));
-        List<Animal> wolfs = new ArrayList<>(List.of(
+        CopyOnWriteArrayList<Animal> wolfs = new CopyOnWriteArrayList<>(List.of(
                 new Wolf("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4))
         ));
         duplicateAnimals.put(AnimalType.WOLF.name(), wolfs);
@@ -140,12 +140,12 @@ public class AnimalsRepositoryTest {
     void testFindOlderAnimal(int n) throws IllegalAccessException {
         Map<String, List<Animal>> olderAnimals = new ConcurrentHashMap<>();
         Animal oldestAnimal = new Shark("Большая акула", new BigDecimal(30000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(29).minusMonths(5).minusDays(22));
-        List<Animal> sharks = new ArrayList<>(List.of(
+        CopyOnWriteArrayList<Animal> sharks = new CopyOnWriteArrayList<>(List.of(
                 new Shark("Кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4)),
                 oldestAnimal,
                 new Shark("Маленькая акула", new BigDecimal(15000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(6).minusMonths(11).minusDays(27))
         ));
-        List<Animal> parrots = new ArrayList<>(List.of(
+        CopyOnWriteArrayList<Animal> parrots = new CopyOnWriteArrayList<>(List.of(
                 new Parrot("Кеша", new BigDecimal(200), "говорящий", LocalDate.now().minusYears(19).minusDays(19)),
                 new Parrot("Попугайчик", new BigDecimal(150), "говорящий", LocalDate.now().minusYears(12).minusMonths(8).minusDays(17)),
                 new Parrot("Цветик", new BigDecimal(180), "говорящий", LocalDate.now().minusYears(9).minusMonths(5).minusDays(12))

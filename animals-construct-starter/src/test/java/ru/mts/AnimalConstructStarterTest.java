@@ -19,6 +19,7 @@ import ru.mts.service.CreateAnimalService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @SpringBootTest(
         classes = {AnimalFactoryTestConfig.class}
@@ -66,7 +67,7 @@ public class AnimalConstructStarterTest {
     @Test
     @DisplayName("Проверка количества создаваемых животных методом createUniqueAnimals()")
     public void testAnimalCreationCount() {
-        Map<String, List<Animal>> uniqueAnimals = createAnimalService.createUniqueAnimals();
+        Map<String, CopyOnWriteArrayList<Animal>> uniqueAnimals = createAnimalService.createUniqueAnimals();
         for (List<Animal> value : uniqueAnimals.values()) {
             Assertions.assertEquals(10, value.size());
         }

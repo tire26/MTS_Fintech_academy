@@ -7,15 +7,15 @@ import ru.mts.model.AnimalType;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public interface CreateAnimalService {
 
     /**
      * Создаёт 10 уникальных животных и печатает их клички и черты
      */
-    default Map<String, List<Animal>> createUniqueAnimals() {
+    default Map<String, CopyOnWriteArrayList<Animal>> createUniqueAnimals() {
         int i = 10;
         Animal[] animals = new Animal[i];
         Animal currAnimal;
@@ -26,8 +26,8 @@ public interface CreateAnimalService {
             i--;
             animals[i] = currAnimal;
         }
-        Map<String, List<Animal>> animalsMap = new HashMap<>();
-        animalsMap.put(getAnimalType().name(), Arrays.asList(animals));
+        Map<String, CopyOnWriteArrayList<Animal>> animalsMap = new HashMap<>();
+        animalsMap.put(getAnimalType().name(), new CopyOnWriteArrayList<>(Arrays.asList(animals)));
         return animalsMap;
     }
 

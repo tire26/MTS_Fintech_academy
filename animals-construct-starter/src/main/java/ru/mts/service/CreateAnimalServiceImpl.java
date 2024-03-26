@@ -6,8 +6,8 @@ import ru.mts.model.AnimalType;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class CreateAnimalServiceImpl implements CreateAnimalService {
 
@@ -50,7 +50,7 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
      * @return выводит их клички и породы
      */
     @Override
-    public Map<String, List<Animal>> createUniqueAnimals() {
+    public Map<String, CopyOnWriteArrayList<Animal>> createUniqueAnimals() {
         int i = 10;
         Animal[] animals = new Animal[i];
         AnimalFactory animalFactory;
@@ -61,8 +61,8 @@ public class CreateAnimalServiceImpl implements CreateAnimalService {
             currAnimal = animalFactory.createAnimal();
             animals[i] = currAnimal;
         } while (i > 0);
-        Map<String, List<Animal>> animalsMap = new HashMap<>();
-        animalsMap.put(getAnimalType().name(), Arrays.asList(animals));
+        Map<String, CopyOnWriteArrayList<Animal>> animalsMap = new HashMap<>();
+        animalsMap.put(getAnimalType().name(), new CopyOnWriteArrayList<>(Arrays.asList(animals)));
         return animalsMap;
     }
 
