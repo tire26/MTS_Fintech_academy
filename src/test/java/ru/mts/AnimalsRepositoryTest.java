@@ -24,6 +24,8 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +57,7 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест правильности работы метода AnimalsRepository.findLeapYearNames()")
     void testFindLeapYearNames() throws IllegalAccessException {
-        Map<String, List<Animal>> animals = new HashMap<>();
+        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
         List<Animal> sharks = new ArrayList<>(List.of(
                 new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.of(1999, 4, 10)),
                 new Shark("морти", new BigDecimal(21000), "ленивый", Collections.emptyList(), LocalDate.of(2019, 2, 14)),
@@ -76,7 +78,7 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест работы метода AnimalsRepository.findLeapYearNames() с пустым массивом на вход")
     void testFindLeapYearNamesEmpty() throws IllegalAccessException {
-        Map<String, List<Animal>> animals = new HashMap<>();
+        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
         field.set(animalsRepository, animals);
 
         Map<String, LocalDate> result = animalsRepository.findLeapYearNames();
@@ -100,7 +102,7 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест работы метода AnimalsRepository.findDuplicate() с пустым массивом на вход")
     void testFindDuplicatesEmpty() throws IllegalAccessException {
-        Map<String, List<Animal>> animals = new HashMap<>();
+        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
         field.set(animalsRepository, animals);
 
         Map<String, List<Animal>> result = animalsRepository.findDuplicate();
@@ -110,7 +112,7 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест правильности работы метода AnimalsRepository.findDuplicate()")
     void testFindDuplicate() throws IllegalAccessException {
-        Map<String, List<Animal>> duplicateAnimals = new HashMap<>();
+        Map<String, List<Animal>> duplicateAnimals = new ConcurrentHashMap<>();
         List<Animal> sharks = new ArrayList<>(List.of(
                 new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
                 new Shark("кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(25).minusDays(4)),
@@ -136,7 +138,7 @@ public class AnimalsRepositoryTest {
     @ValueSource(ints = {5, 7, 10, 100})
     @DisplayName("тест правильности работы метода AnimalsRepository.findOlderAnimal()")
     void testFindOlderAnimal(int n) throws IllegalAccessException {
-        Map<String, List<Animal>> olderAnimals = new HashMap<>();
+        Map<String, List<Animal>> olderAnimals = new ConcurrentHashMap<>();
         Animal oldestAnimal = new Shark("Большая акула", new BigDecimal(30000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(29).minusMonths(5).minusDays(22));
         List<Animal> sharks = new ArrayList<>(List.of(
                 new Shark("Кусь", new BigDecimal(20000), "кусается", Collections.emptyList(), LocalDate.now().minusYears(20).minusDays(4)),
@@ -176,7 +178,7 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест работы метода AnimalsRepository.findOlderAnimal() с пустым массивом на вход")
     void testFindOlderAnimalEmpty() throws IllegalAccessException {
-        Map<String, List<Animal>> animals = new HashMap<>();
+        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
         field.set(animalsRepository, animals);
 
         Map<Animal, Integer> result = animalsRepository.findOlderAnimal(10);
@@ -194,7 +196,7 @@ public class AnimalsRepositoryTest {
     @DisplayName("тест работы метода AnimalsRepository.findOlderAnimal() с неправильным возрастом на вход")
     void testFindOlderAnimalWrongOld() throws IllegalAccessException {
         int n = -1;
-        Map<String, List<Animal>> animals = new HashMap<>();
+        Map<String, List<Animal>> animals = new ConcurrentHashMap<>();
         field.set(animalsRepository, animals);
         assertThrows(IllegalAgeException.class, () -> animalsRepository.findOlderAnimal(n));
     }
@@ -208,7 +210,7 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест работы метода findAverageAge с массивом из 1 животного")
     public void testFindAverageAge_OneAnimal() {
-        List<Animal> animals = List.of(new Dog("Dog", BigDecimal.valueOf(20000), "Кусается", LocalDate.now().minusYears(10)));
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(new Dog("Dog", BigDecimal.valueOf(20000), "Кусается", LocalDate.now().minusYears(10))));
         Double averageAge = animalsRepository.findAverageAge(animals);
         assertEquals(10, averageAge);
     }
@@ -216,12 +218,12 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест работы метода findAverageAge с массивом животных")
     public void testFindAverageAge_MultipleAnimals() {
-        List<Animal> animals = List.of(
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(
                 new Dog("Dog", BigDecimal.valueOf(20000), "Кусается", LocalDate.now().minusYears(3).minusMonths(1)),
                 new Cat("Cat", BigDecimal.valueOf(20), "Ест много", LocalDate.now().minusYears(2).minusMonths(1).minusDays(2)),
                 new Parrot("Bird", BigDecimal.valueOf(200), "Не умеет летать", LocalDate.now().minusMonths(10)),
                 new Parrot("Bird 2", BigDecimal.valueOf(400), "Умеет летать, но не летает", LocalDate.now().minusYears(1).minusDays(10))
-        );
+        ));
         Double averageAge = animalsRepository.findAverageAge(animals);
         assertEquals(1.5, averageAge);
     }
@@ -236,11 +238,11 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест метода findOldAndExpensive с массивом животных не старше 5 лет")
     public void testFindOldAndExpensive_NoOldAndExpensiveAnimals() {
-        List<Animal> animals = List.of(
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(
                 new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
                 new Cat("Cat", BigDecimal.valueOf(200), "", LocalDate.now().minusYears(5).minusMonths(2).minusDays(5)),
                 new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2))
-        );
+        ));
         List<Animal> result = animalsRepository.findOldAndExpensive(animals);
         assertTrue(result.isEmpty());
     }
@@ -248,11 +250,11 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест метода findOldAndExpensive с массивом животных c 1 животным подходящем по критериям")
     public void testFindOldAndExpensive_OneOldAndExpensiveAnimal() {
-        List<Animal> animals = List.of(
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(
                 new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
                 new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5)),
                 new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2))
-        );
+        ));
         List<Animal> result = animalsRepository.findOldAndExpensive(animals);
         assertEquals(1, result.size());
         assertEquals("Cat", result.get(0).getName());
@@ -263,12 +265,12 @@ public class AnimalsRepositoryTest {
     public void testFindOldAndExpensive_MultipleOldAndExpensiveAnimals() {
         Dog dog = new Dog("Dog", BigDecimal.valueOf(600), "", LocalDate.now().minusYears(8).minusMonths(4).minusDays(5));
         Cat cat = new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5));
-        List<Animal> animals = List.of(
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(
                 dog,
                 cat,
                 new Parrot("Bird", BigDecimal.valueOf(400), "", LocalDate.now().minusYears(8).minusDays(5).minusMonths(2)),
                 new Shark("Shark", BigDecimal.valueOf(300), "", new ArrayList<>(), LocalDate.now().minusDays(20))
-        );
+        ));
         List<Animal> result = animalsRepository.findOldAndExpensive(animals);
         assertEquals(2, result.size());
         assertTrue(result.contains(dog));
@@ -278,29 +280,29 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест метода findMinCostAnimals с null массивом")
     public void testFindMinCostAnimals_NullList() {
-        List<Animal> animals = null;
+        CopyOnWriteArrayList<Animal> animals = null;
         assertThrows(IllegalArgumentException.class, () -> animalsRepository.findMinConstAnimals(animals));
     }
 
     @Test
     @DisplayName("тест метода findMinCostAnimals с массивом из 2 животных")
     public void testFindMinCostAnimals_LessThanThreeElements() {
-        List<Animal> animals = List.of(
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(
                 new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
                 new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5))
-        );
+        ));
         assertThrows(Less3AnimalsException.class, () -> animalsRepository.findMinConstAnimals(animals));
     }
 
     @Test
     @DisplayName("тест метода findMinCostAnimals с массивом из 3 животных")
     public void testFindMinCostAnimals_ExactlyThreeElements() {
-        List<Animal> animals = List.of(
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(
                 new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
                 new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5)),
                 new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2))
-        );
-        List<String> result;
+        ));
+        CopyOnWriteArrayList<String> result;
         try {
             result = animalsRepository.findMinConstAnimals(animals);
             assertEquals(3, result.size());
@@ -315,14 +317,14 @@ public class AnimalsRepositoryTest {
     @Test
     @DisplayName("тест метода findMinCostAnimals с массивом из большего количества элементов")
     public void testFindMinCostAnimals_MoreThanThreeElements() {
-        List<Animal> animals = List.of(
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>(List.of(
                 new Dog("Dog", BigDecimal.valueOf(100), "", LocalDate.now().minusYears(6).minusMonths(2).minusDays(5)),
                 new Cat("Cat", BigDecimal.valueOf(500), "", LocalDate.now().minusYears(8).minusMonths(2).minusDays(5)),
                 new Parrot("Bird", BigDecimal.valueOf(300), "", LocalDate.now().minusYears(4).minusDays(5).minusMonths(2)),
                 new Horse("Horse", BigDecimal.valueOf(400), "", LocalDate.now().minusYears(3).minusDays(5).minusMonths(2)),
                 new Zebra("Zebra", BigDecimal.valueOf(200), "", LocalDate.now().minusYears(5).minusDays(5).minusMonths(2))
-        );
-        List<String> result;
+        ));
+        CopyOnWriteArrayList<String> result;
         try {
             result = animalsRepository.findMinConstAnimals(animals);
             assertEquals(3, result.size());

@@ -10,9 +10,9 @@ import ru.mts.repository.AnimalsRepositoryImpl;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
 public class ScheduledTask {
@@ -27,7 +27,7 @@ public class ScheduledTask {
         animalsRepository.printDuplicate();
         System.out.println("-----------------------------------");
 
-        Map<String, LocalDate> leapYearNames = animalsRepository.findLeapYearNames();
+        ConcurrentMap<String, LocalDate> leapYearNames = animalsRepository.findLeapYearNames();
         for (String s : leapYearNames.keySet()) {
             LocalDate localDate = leapYearNames.get(s);
             System.out.println("Животное с високосным годом рождения: " + s + " Дата: " + localDate);
@@ -37,12 +37,12 @@ public class ScheduledTask {
         int N = 15;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         AnimalsRepositoryImpl ar = (AnimalsRepositoryImpl) animalsRepository;
-        List<Animal> animals = new ArrayList<>();
+        CopyOnWriteArrayList<Animal> animals = new CopyOnWriteArrayList<>();
         for (List<Animal> value : ar.getAnimalsMap().values()) {
             animals.addAll(value);
         }
         try {
-            Map<Animal, Integer> olderAnimal = animalsRepository.findOlderAnimal(N);
+            ConcurrentMap<Animal, Integer> olderAnimal = animalsRepository.findOlderAnimal(N);
             for (Animal animal : olderAnimal.keySet()) {
                 System.out.println("Животное с возрастом больше " + N + " лет:" + animal.getName() + "| дата рождения: " + animal.getBirthDate().format(formatter));
             }
